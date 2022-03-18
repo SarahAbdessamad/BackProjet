@@ -36,4 +36,10 @@ public class ParticipantsController {
         Participants participants = participantsService.findParticipantsById(participantsId);
         return new ResponseEntity<>(participants, HttpStatus.OK);
     }
+    @GetMapping("/finaad/{id}")
+    public ResponseEntity<Participants> getEssmployeeById (@PathVariable("participantsId") Long participantsId) throws UserPrincipalNotFoundException {
+        Participants participants = participantsService.findParticipantsById(participantsId);
+        return new ResponseEntity<>(participants, HttpStatus.OK);
+    }
+
 }
