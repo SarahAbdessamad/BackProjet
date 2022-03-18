@@ -13,6 +13,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/Users")
 public class UserController {
+
     @Autowired
     UsersRepo usersRepo;
     private UsersService usersService;
@@ -55,6 +56,7 @@ public class UserController {
     /*@GetMapping("/findByLetter")
     public ResponseEnstity<Users> getUserByLetter(@RequestParam char l){
         Users users = usersRepo.getUserByname(nom);
+
     }*/
 
     @RequestMapping("/find/{nom}")
