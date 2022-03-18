@@ -53,12 +53,16 @@ public class UserController {
     */
 
     /*@GetMapping("/findByLetter")
-    public ResponseEntity<Users> getUserByLetter(@RequestParam char l){
+    public ResponseEnstity<Users> getUserByLetter(@RequestParam char l){
         Users users = usersRepo.getUserByname(nom);
     }*/
 
     @RequestMapping("/find/{nom}")
     public List<Users> getUserByname(@PathVariable String nom) {
+        return (List<Users>) usersRepo.getUserByname(nom);
+    }
+    @RequestMapping("/findaaaaaaaaa/{nom}")
+    public List<Users> getUserBynamdde(@PathVariable String nom) {
         return (List<Users>) usersRepo.getUserByname(nom);
     }
 
