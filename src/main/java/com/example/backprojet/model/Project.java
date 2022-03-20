@@ -2,6 +2,8 @@ package com.example.backprojet.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -17,18 +19,24 @@ public class Project implements Serializable {
     private String  ProjectDepartement ;
     private String ProjectStartdate;
     private String ProjectDeadline;
-    private Long participantsId;
-    @OneToOne
-    private Participants participants;
 
-    public Project(Long projectId, String projectTitle, String projectDescription, String projectDepartement, String projectStartdate, String projectDeadline, long participantsId) {
+
+
+    @ManyToMany
+    @JoinTable(
+            name="users_enrolled",
+            joinColumns = @JoinColumn(name="ProjectId"),
+            inverseJoinColumns = @JoinColumn(name = "id")
+    )
+    private Set<Users> enrolledusers = new HashSet<>();
+
+    public Project(Long projectId, String projectTitle, String projectDescription, String projectDepartement, String projectStartdate, String projectDeadline) {
         ProjectId = projectId;
         ProjectTitle = projectTitle;
         ProjectDescription = projectDescription;
         ProjectDepartement = projectDepartement;
         ProjectStartdate = projectStartdate;
         ProjectDeadline = projectDeadline;
-        this.participantsId = participantsId;
     }
 
 
@@ -85,14 +93,11 @@ public class Project implements Serializable {
         ProjectDeadline = projectDeadline;
     }
 
-    public long getParticipantsId() {
-        return participantsId;
-    }
 
-    public void setParticipantsId(long participantsId) {
-        this.participantsId = participantsId;
-    }
 
+    public Set<Users> getEnrolledusers() {
+        return enrolledusers;
+    }
     @Override
     public String toString() {
         return "Project{" +
@@ -102,7 +107,10 @@ public class Project implements Serializable {
                 ", ProjectDepartement='" + ProjectDepartement + '\'' +
                 ", ProjectStartdate='" + ProjectStartdate + '\'' +
                 ", ProjectDeadline='" + ProjectDeadline + '\'' +
-                ", participants=" + participantsId +
                 '}';
+    }
+
+    public void enrollUsers(Users user) {
+        enrolledusers.add(user);
     }
 }

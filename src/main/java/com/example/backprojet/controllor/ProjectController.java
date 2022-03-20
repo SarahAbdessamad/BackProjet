@@ -1,8 +1,9 @@
 package com.example.backprojet.controllor;
 
-import com.example.backprojet.model.Participants;
 import com.example.backprojet.model.Project;
+import com.example.backprojet.model.Users;
 import com.example.backprojet.repo.ProjectRepo;
+import com.example.backprojet.repo.UsersRepo;
 import com.example.backprojet.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,8 +18,11 @@ import java.util.Optional;
 public class ProjectController {
     private Project project;
     private  ProjectService projectService;
+
     @Autowired
     private  ProjectRepo projectRepo;
+    @Autowired
+    private UsersRepo usersRepo;
         public ProjectController(ProjectService projectService){
         this.projectService=projectService;
         }
@@ -42,6 +46,21 @@ public class ProjectController {
     public ResponseEntity<List<Project>> getAllProject() {
         List<Project> project = projectRepo.findAll();
         return new ResponseEntity<List<Project>>(project, HttpStatus.OK);
+    }
+
+    @PutMapping("/{pprojectId}/enroll/{userid}")
+    Project enrollUsers(
+            @PathVariable  Long userid,
+            @PathVariable  Long pprojectId
+    ){
+        Project project = projectRepo.findById(pprojectId).get();
+        System.out.println(project);
+        Users user = usersRepo.findById(userid).get();
+        System.out.println(user);
+        project.enrollUsers(user);
+        System.out.println(project);
+        return projectRepo.save(project);
+
     }
 
 }
