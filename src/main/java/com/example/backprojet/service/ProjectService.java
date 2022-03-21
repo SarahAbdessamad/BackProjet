@@ -11,15 +11,21 @@ import java.util.UUID;
 @Service
 @Transactional
 public class ProjectService {
+
     private  ProjectRepo projectRepo;
-    /*@Autowired
+    @Autowired
     public ProjectService(ProjectRepo projectRepo) {
         this.projectRepo = projectRepo;
     }
+    /*
     public Project addEmployee(Project project) {
         project.setProjectName(UUID.randomUUID().toString());
         return ProjectRepo.save(project);
     }
 
      */
+
+    public void deleteProject(Long ProjectId){
+        projectRepo.deleteById(ProjectId);
+    }
 }

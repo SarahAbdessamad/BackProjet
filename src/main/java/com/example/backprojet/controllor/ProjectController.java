@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -48,6 +49,12 @@ public class ProjectController {
         return new ResponseEntity<List<Project>>(project, HttpStatus.OK);
     }
 
+    @DeleteMapping("/delete/{ProjectId}")
+    public ResponseEntity<?> deleteProject(@PathVariable("ProjectId") Long id) {
+        projectService.deleteProject(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @PutMapping("/{pprojectId}/enroll/{userid}")
     Project enrollUsers(
             @PathVariable  Long userid,
@@ -61,6 +68,33 @@ public class ProjectController {
         System.out.println(project);
         return projectRepo.save(project);
 
+    }
+
+    @PutMapping("/{pprojectId}/delete/{userid}")
+    Project deleteUsers(
+            @PathVariable  Long userid,
+            @PathVariable  Long pprojectId
+    ){
+        Project project = projectRepo.findById(pprojectId).get();
+        System.out.println(project);
+        Users user = usersRepo.findById(userid).get();
+        System.out.println(user);
+        project.deleteUsers(user);
+        System.out.println(project);
+        return projectRepo.save(project);
+    }
+
+
+    @PutMapping("/{pprojectId}/deleteAll")
+    Project deleteAllUsers(
+            @PathVariable  Long pprojectId
+    ){
+        Project project = projectRepo.findById(pprojectId).get();
+        System.out.println(project);
+
+        project.deleteAllUsers();
+        System.out.println(project);
+        return projectRepo.save(project);
     }
 
 }

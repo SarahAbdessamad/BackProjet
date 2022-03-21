@@ -2,8 +2,7 @@ package com.example.backprojet.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 @Entity
@@ -113,4 +112,8 @@ public class Project implements Serializable {
     public void enrollUsers(Users user) {
         enrolledusers.add(user);
     }
+    public void deleteUsers(Users user) { enrolledusers.remove(user);}
+    public void deleteAllUsers() { enrolledusers.clear();}
+
+
 }

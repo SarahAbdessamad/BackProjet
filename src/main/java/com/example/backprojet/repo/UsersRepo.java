@@ -2,6 +2,7 @@ package com.example.backprojet.repo;
 
 import com.example.backprojet.model.Project;
 import com.example.backprojet.model.Users;
+import lombok.var;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

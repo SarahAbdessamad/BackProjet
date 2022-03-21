@@ -2,8 +2,11 @@ package com.example.backprojet.controllor;
 
 
 import com.example.backprojet.model.Users;
+import com.example.backprojet.repo.ProjectRepo;
 import com.example.backprojet.repo.UsersRepo;
 import com.example.backprojet.service.UsersService;
+import lombok.var;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +16,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/Users")
 public class UserController {
-    /*ki tchouuuf hedhaaaaaaaaaaaaaaaaaaaaaaaa 9olii 3al teams */
 
     @Autowired
     UsersRepo usersRepo;
@@ -68,5 +70,15 @@ public class UserController {
     public List<Users> getUserBynamdde(@PathVariable String nom) {
         return (List<Users>) usersRepo.getUserByname(nom);
     }
+
+/*
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
+        //UsersRepo.deleteUser(id);
+        //return new ResponseEntity<>(HttpStatus.OK);
+        return (List<Users>) usersRepo.deleteUser(id);
+    }
+
+ */
 
 }
