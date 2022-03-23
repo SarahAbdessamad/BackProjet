@@ -1,18 +1,27 @@
 package com.example.backprojet.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
 
 
 @Entity
-
 public class Project implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
 
     private Long ProjectId;
+
+
+/*
+    @JsonIgnore
+    @OneToMany(mappedBy="project")
+    private Set<Task> tasks =new HashSet<>();
+
+ */
     private String ProjectTitle;
     private String ProjectDescription;
     private String  ProjectDepartement ;
@@ -28,6 +37,7 @@ public class Project implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "id")
     )
     private Set<Users> enrolledusers = new HashSet<>();
+
 
     public Project(Long projectId, String projectTitle, String projectDescription, String projectDepartement, String projectStartdate, String projectDeadline) {
         ProjectId = projectId;
@@ -91,6 +101,12 @@ public class Project implements Serializable {
     public void setProjectDeadline(String projectDeadline) {
         ProjectDeadline = projectDeadline;
     }
+/*
+    public Set<Task> getTasks() {
+        return tasks;
+    }
+
+ */
 
 
 

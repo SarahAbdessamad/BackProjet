@@ -23,6 +23,10 @@ public class Users implements Serializable {
     @ManyToMany(mappedBy = "enrolledusers")
     private Set<Project> listprojects = new HashSet<>();
 
+    @JsonIgnore
+    @ManyToMany(mappedBy = "enrollUsersToTask")
+    private Set<Task> listTasks = new HashSet<>();
+
     public Users() {
         this.id = Long.valueOf(0);
         this.nom = "";
@@ -61,6 +65,10 @@ public class Users implements Serializable {
 
     public Set<Project> getListprojects() {
         return listprojects;
+    }
+
+    public Set<Task> getListTasks() {
+        return listTasks;
     }
 
 
