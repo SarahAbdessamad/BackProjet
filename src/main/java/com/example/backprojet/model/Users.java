@@ -18,6 +18,33 @@ public class Users implements Serializable {
     private Long id;
     private String nom;
     private String prenom;
+    private String speciality;
+    private String departement;
+    private String experience;
+
+    public String getSpeciality() {
+        return speciality;
+    }
+
+    public void setSpeciality(String speciality) {
+        this.speciality = speciality;
+    }
+
+    public String getDepartement() {
+        return departement;
+    }
+
+    public void setDepartement(String departement) {
+        this.departement = departement;
+    }
+
+    public String getExperience() {
+        return experience;
+    }
+
+    public void setExperience(String experience) {
+        this.experience = experience;
+    }
 
     @JsonIgnore
     @ManyToMany(mappedBy = "enrolledusers")
