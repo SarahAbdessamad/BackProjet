@@ -28,8 +28,8 @@ public class TaskController {
         this.taskService=taskService;
     }
     @PostMapping("/addtask")
-    void addTask (@RequestBody Task task) {
-        taskRepo.save(task);
+    Task addTask (@RequestBody Task task) {
+        return taskRepo.save(task);
     }
 
     @RequestMapping("/find/{id}")
@@ -85,6 +85,14 @@ public class TaskController {
         System.out.println(task);
         return taskRepo.save(task);
     }
+
+    @RequestMapping("/findTask/{projectId}")
+    public List<Task> getTaskByProject(@PathVariable String projectId) {
+
+        return (List<Task>) taskRepo.getTaskByProject(projectId);
+    }
+
+
     /*
     @PutMapping("/{taskId}/enroll/{ProjectId}")
     Task assign(

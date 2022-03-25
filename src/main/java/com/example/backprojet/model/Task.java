@@ -18,6 +18,15 @@ public class Task {
     private String Deadline;
     private String MaxStart;
     private String MaxFinish;
+    private String projectId;
+
+    public String getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(String projectId) {
+        this.projectId = projectId;
+    }
 
     @ManyToMany
     @JoinTable(

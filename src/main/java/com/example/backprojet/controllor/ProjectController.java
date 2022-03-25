@@ -58,7 +58,7 @@ public class ProjectController {
     @PutMapping("/{pprojectId}/enroll/{userid}")
     Project enrollUsers(
             @PathVariable  Long userid,
-            @PathVariable  Long pprojectId
+            @PathVariable  Long pprojectId,@RequestBody Project project1
     ){
         Project project = projectRepo.findById(pprojectId).get();
         System.out.println(project);
@@ -96,5 +96,7 @@ public class ProjectController {
         System.out.println(project);
         return projectRepo.save(project);
     }
+
+
 
 }
