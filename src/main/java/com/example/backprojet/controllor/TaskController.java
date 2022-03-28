@@ -1,6 +1,7 @@
 package com.example.backprojet.controllor;
 
 
+import com.example.backprojet.exception.UsernotFoundException;
 import com.example.backprojet.model.Task;
 import com.example.backprojet.model.Users;
 import com.example.backprojet.repo.TaskRepo;
@@ -97,33 +98,28 @@ public class TaskController {
         return (List<Task>) taskRepo.getTaskByProject(projectId);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Task> updateTask(@RequestBody Task task) {
-        Task updateTask = taskService.updateTask(task);
-        return new ResponseEntity<>(updateTask, HttpStatus.OK);
-    }
+    @PutMapping("/updateByID/{id}")
 
-
-    /*
-    @PutMapping("/update")
-    public ResponseEntity<Task> updateTaskbyId(@PathVariable Long id , @RequestBody Task task){
-        Task task = taskRepo.findById(id);
-        task.setTaskId(task.getTaskId());
-        task.setTitle(task.getTitle());
-        task.setDescription(task.getDescription());
-        task.setSpeciality(task.getSpeciality());
-        task.setPriority(task.getPriority());
-        task.setStartdate(task.getStartdate());
-        task.setDeadline(task.getDeadline());
-        task.setMaxStart(task.getMaxStart());
-        task.setMaxFinish(task.getMaxFinish());
-        task.setProjectId(task.getProjectId());
-        Task updatedGadget = taskRepo.save(task);
+    public ResponseEntity<Task> updateGadgetbyId(@PathVariable Long id , @RequestBody Task task){
+        Task task1 = taskRepo.findById(id).orElseThrow(()-> new UsernotFoundException("User by id "+ id + "was not found"));;
+        task1.setTaskId(task.getTaskId());
+        task1.setTitle(task.getTitle());
+        task1.setDescription(task.getDescription());
+        task1.setSpeciality(task.getSpeciality());
+        task1.setPriority(task.getPriority());
+        task1.setStartdate(task.getStartdate());
+        task1.setDeadline(task.getDeadline());
+        task1.setMaxStart(task.getMaxStart());
+        task1.setMaxFinish(task.getMaxFinish());
+        task1.setProjectId(task.getProjectId());
+        Task updatedGadget = taskRepo.save(task1);
         return new ResponseEntity<>(updatedGadget, HttpStatus.OK);
 
     }
 
-     */
+
+
+
     /*
     @PutMapping("/{taskId}/enroll/{ProjectId}")
     Task assign(

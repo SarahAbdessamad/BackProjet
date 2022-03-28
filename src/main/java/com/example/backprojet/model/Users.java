@@ -1,7 +1,6 @@
 package com.example.backprojet.model;
 
 
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;

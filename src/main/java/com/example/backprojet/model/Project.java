@@ -26,6 +26,7 @@ public class Project implements Serializable {
 
 
     private String ProjectTitle;
+    @Column(length = 2048)
     private String ProjectDescription;
     private String  ProjectDepartement ;
     private String ProjectStartdate;
