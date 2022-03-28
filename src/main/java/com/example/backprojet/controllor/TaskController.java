@@ -18,22 +18,24 @@ import java.util.Optional;
 @RequestMapping("/task")
 public class TaskController {
     private Task task;
-    private  TaskService taskService;
+    private TaskService taskService;
 
     @Autowired
     private TaskRepo taskRepo;
     @Autowired
     private UsersRepo usersRepo;
-    public TaskController(TaskService taskService){
-        this.taskService=taskService;
+
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
     }
+
     @PostMapping("/addtask")
-    Task addTask (@RequestBody Task task) {
+    Task addTask(@RequestBody Task task) {
         return taskRepo.save(task);
     }
 
     @RequestMapping("/find/{id}")
-    public Optional<Task> getTaskById (@PathVariable(value = "id") Long TaskId) {
+    public Optional<Task> getTaskById(@PathVariable(value = "id") Long TaskId) {
         return taskRepo.findById(TaskId);
     }
 
@@ -48,11 +50,12 @@ public class TaskController {
         taskService.deleteTask(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @PutMapping("/{taskId}/enroll/{userid}")
     Task enrollUsersToTask(
-            @PathVariable  Long userid,
-            @PathVariable  Long taskId
-    ){
+            @PathVariable Long userid,
+            @PathVariable Long taskId
+    ) {
         Task task = taskRepo.findById(taskId).get();
         System.out.println(task);
         Users user = usersRepo.findById(userid).get();
@@ -62,11 +65,12 @@ public class TaskController {
         return taskRepo.save(task);
 
     }
+
     @PutMapping("/{taskId}/delete/{userid}")
     Task deleteUsersFromTask(
-            @PathVariable  Long userid,
-            @PathVariable  Long taskId
-    ){
+            @PathVariable Long userid,
+            @PathVariable Long taskId
+    ) {
         Task task = taskRepo.findById(taskId).get();
         System.out.println(task);
         Users user = usersRepo.findById(userid).get();
@@ -75,10 +79,11 @@ public class TaskController {
         System.out.println(task);
         return taskRepo.save(task);
     }
+
     @PutMapping("/{taskId}/deleteAll")
     Task deleteAllUsers(
-            @PathVariable  Long taskId
-    ){
+            @PathVariable Long taskId
+    ) {
         Task task = taskRepo.findById(taskId).get();
         System.out.println(task);
         task.deleteAllUsersFromTask();
@@ -91,11 +96,34 @@ public class TaskController {
 
         return (List<Task>) taskRepo.getTaskByProject(projectId);
     }
+
     @PutMapping("/update")
     public ResponseEntity<Task> updateTask(@RequestBody Task task) {
         Task updateTask = taskService.updateTask(task);
         return new ResponseEntity<>(updateTask, HttpStatus.OK);
     }
+
+
+    /*
+    @PutMapping("/update")
+    public ResponseEntity<Task> updateTaskbyId(@PathVariable Long id , @RequestBody Task task){
+        Task task = taskRepo.findById(id);
+        task.setTaskId(task.getTaskId());
+        task.setTitle(task.getTitle());
+        task.setDescription(task.getDescription());
+        task.setSpeciality(task.getSpeciality());
+        task.setPriority(task.getPriority());
+        task.setStartdate(task.getStartdate());
+        task.setDeadline(task.getDeadline());
+        task.setMaxStart(task.getMaxStart());
+        task.setMaxFinish(task.getMaxFinish());
+        task.setProjectId(task.getProjectId());
+        Task updatedGadget = taskRepo.save(task);
+        return new ResponseEntity<>(updatedGadget, HttpStatus.OK);
+
+    }
+
+     */
     /*
     @PutMapping("/{taskId}/enroll/{ProjectId}")
     Task assign(
@@ -111,4 +139,5 @@ public class TaskController {
         return taskRepo.save(task);
     }
      */
+
 }
