@@ -22,4 +22,11 @@ public interface UsersRepo extends JpaRepository<Users, Long> {
 public interface UsersRepo extends JpaRepository<Users, Long> {
     @Query("SELECT u FROM Users u WHERE u.nom = :nom")
     List<Users> getUserByname(@Param("nom") String nom);
+
+    @Query("SELECT u FROM Users u ORDER BY u.experience DESC")
+    public Iterable<Users> findByExperience();
+
+    @Query("SELECT u FROM Users u WHERE u.speciality = :speciality ")
+    public Iterable<Users> findBySpeciality(@Param("speciality") String speciality);
+
 }

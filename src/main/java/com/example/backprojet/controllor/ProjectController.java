@@ -27,13 +27,7 @@ public class ProjectController {
         public ProjectController(ProjectService projectService){
         this.projectService=projectService;
         }
-        /*
-    @PostMapping("/addProject")
-    public ResponseEntity<Project> addEmployee(@RequestBody Project project) {
-      Project newProject = projectRepo.save(project);
-    return new ResponseEntity<>(newProject, HttpStatus.CREATED);
-    }
-    */
+
     @PostMapping("/addproject")
     void addProject (@RequestBody Project project) {
         projectRepo.save(project);
@@ -96,7 +90,32 @@ public class ProjectController {
         System.out.println(project);
         return projectRepo.save(project);
     }
-
-
-
+    /*
+    @PutMapping("/{pprojectId}/enroll/{userid}")
+    Project getUsersByProject(
+            @PathVariable  Long userid,
+            @PathVariable  Long pprojectId
+    ){
+        Project project = projectRepo.findById(pprojectId).get();
+        System.out.println(project);
+        Users user = usersRepo.findById(userid).get();
+        System.out.println(user);
+        project.enrollUsers(user);
+        System.out.println(project);
+        return projectRepo.save(project);
+    }
+     */
+    @PutMapping("/{pprojectId}/get/{speciality}")
+    Project specialityOfUser(
+            @PathVariable  String speciality,
+            @PathVariable  Long pprojectId
+    ){
+        Project project = projectRepo.findById(pprojectId).get();
+        System.out.println(project);
+        Users user = (Users) usersRepo.findBySpeciality(speciality);
+        System.out.println(user);
+        project.specialityOfUser(user);
+        System.out.println(project);
+        return projectRepo.save(project);
+    }
 }

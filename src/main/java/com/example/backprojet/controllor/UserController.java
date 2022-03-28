@@ -2,11 +2,8 @@ package com.example.backprojet.controllor;
 
 
 import com.example.backprojet.model.Users;
-import com.example.backprojet.repo.ProjectRepo;
 import com.example.backprojet.repo.UsersRepo;
 import com.example.backprojet.service.UsersService;
-import lombok.var;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -80,5 +77,13 @@ public class UserController {
     }
 
  */
+    @GetMapping("/findUserExp")
+    public List<Users> findByExperience(){
+        return (List<Users>) usersRepo.findByExperience();
 
+}
+    @RequestMapping("/findUser/{speciality}")
+    public List<Users> findBySpeciality(@PathVariable String speciality){
+        return (List<Users>) usersRepo.findBySpeciality(speciality);
+    }
 }

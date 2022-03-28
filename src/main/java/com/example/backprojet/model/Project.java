@@ -1,6 +1,7 @@
 package com.example.backprojet.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.apache.catalina.User;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,6 +23,8 @@ public class Project implements Serializable {
     private Set<Task> tasks =new HashSet<>();
 
  */
+
+
     private String ProjectTitle;
     private String ProjectDescription;
     private String  ProjectDepartement ;
@@ -36,7 +39,7 @@ public class Project implements Serializable {
             joinColumns = @JoinColumn(name="ProjectId"),
             inverseJoinColumns = @JoinColumn(name = "id")
     )
-    private Set<Users> enrolledusers = new HashSet<>();
+    private List<Users> enrolledusers = new ArrayList<>();
 
 
     public Project(Long projectId, String projectTitle, String projectDescription, String projectDepartement, String projectStartdate, String projectDeadline) {
@@ -110,7 +113,7 @@ public class Project implements Serializable {
 
 
 
-    public Set<Users> getEnrolledusers() {
+    public List<Users> getEnrolledusers() {
         return enrolledusers;
     }
     @Override
@@ -130,6 +133,11 @@ public class Project implements Serializable {
     }
     public void deleteUsers(Users user) { enrolledusers.remove(user);}
     public void deleteAllUsers() { enrolledusers.clear();}
-
-
+    //public void getUsersByProject(Users user) {enrolledusers.findAll(User);}
+    public List <Users> specialityOfUser(Users user) {
+        List <Users> users=new ArrayList<Users>();
+        for(int i=0;i<enrolledusers.size();i++)
+            users.add(enrolledusers.get(i));
+        return users;
+    }
 }

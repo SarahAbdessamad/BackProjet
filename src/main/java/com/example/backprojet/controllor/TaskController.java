@@ -91,8 +91,11 @@ public class TaskController {
 
         return (List<Task>) taskRepo.getTaskByProject(projectId);
     }
-
-
+    @PutMapping("/update")
+    public ResponseEntity<Task> updateTask(@RequestBody Task task) {
+        Task updateTask = taskService.updateTask(task);
+        return new ResponseEntity<>(updateTask, HttpStatus.OK);
+    }
     /*
     @PutMapping("/{taskId}/enroll/{ProjectId}")
     Task assign(
@@ -106,10 +109,6 @@ public class TaskController {
         task.enrollUsersToTask(user);
         System.out.println(task);
         return taskRepo.save(task);
-
     }
-
      */
-
-
 }
