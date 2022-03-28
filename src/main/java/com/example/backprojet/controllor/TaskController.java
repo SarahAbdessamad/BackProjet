@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -102,7 +103,6 @@ public class TaskController {
 
     public ResponseEntity<Task> updateGadgetbyId(@PathVariable Long id , @RequestBody Task task){
         Task task1 = taskRepo.findById(id).orElseThrow(()-> new UsernotFoundException("User by id "+ id + "was not found"));;
-        task1.setTaskId(task.getTaskId());
         task1.setTitle(task.getTitle());
         task1.setDescription(task.getDescription());
         task1.setSpeciality(task.getSpeciality());
@@ -116,6 +116,7 @@ public class TaskController {
         return new ResponseEntity<>(updatedGadget, HttpStatus.OK);
 
     }
+
 
 
 

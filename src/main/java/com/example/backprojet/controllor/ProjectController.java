@@ -10,9 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/project")
@@ -105,17 +103,40 @@ public class ProjectController {
         return projectRepo.save(project);
     }
      */
-    @PutMapping("/{pprojectId}/get/{speciality}")
-    Project specialityOfUser(
+    @GetMapping("/{pprojectId}/get")
+    List<Users> GetParticipants(
+
+            @PathVariable Long pprojectId
+    ) {
+        Project project = projectRepo.findById(pprojectId).get();
+        System.out.println(project);
+        List<Users> enrolled_users = project.getEnrolledusers();
+        System.out.println(enrolled_users);
+        return enrolled_users;
+    }
+    @GetMapping("/{pprojectId}/getspec/{speciality}")
+    List<Users> specialityOfUser(
             @PathVariable  String speciality,
             @PathVariable  Long pprojectId
     ){
-        Project project = projectRepo.findById(pprojectId).get();
-        System.out.println(project);
-        Users user = (Users) usersRepo.findBySpeciality(speciality);
-        System.out.println(user);
-        project.specialityOfUser(user);
-        System.out.println(project);
-        return projectRepo.save(project);
+        List<Users> enrolled_users = this.GetParticipants(pprojectId);
+        List<Users>  filtred_users =  new ArrayList<>();
+        Iterator<Users> i = enrolled_users.iterator();
+        System.out.println("etape 0");
+        System.out.println(filtred_users);
+        while (i.hasNext()) {
+            Users i2= i.next();
+            if(Objects.equals(i2.getSpeciality(), speciality)) {
+
+                System.out.println("etape 1");
+                //System.out.println(i.next());
+                System.out.println(i2);
+                filtred_users.add(i2);
+            }
+        }
+        System.out.println("etape final");
+        System.out.println(filtred_users);
+        return filtred_users;
+
     }
 }
