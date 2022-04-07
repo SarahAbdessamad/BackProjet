@@ -24,7 +24,7 @@ public class Project implements Serializable {
 
  */
 
-
+    @Column(length = 2048)
     private String ProjectTitle;
     @Column(length = 2048)
     private String ProjectDescription;

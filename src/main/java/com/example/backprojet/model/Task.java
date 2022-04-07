@@ -10,7 +10,9 @@ public class Task {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false, updatable = false)
     private Long TaskId;
+    @Column(length = 2048)
     private String title;
+    @Column(length = 2048)
     private String description;
     private String speciality;
     private String Priority;

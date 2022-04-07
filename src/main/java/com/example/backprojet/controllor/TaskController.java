@@ -2,6 +2,7 @@ package com.example.backprojet.controllor;
 
 
 import com.example.backprojet.exception.UsernotFoundException;
+import com.example.backprojet.model.Project;
 import com.example.backprojet.model.Task;
 import com.example.backprojet.model.Users;
 import com.example.backprojet.repo.TaskRepo;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/task")
@@ -97,6 +99,17 @@ public class TaskController {
     public List<Task> getTaskByProject(@PathVariable String projectId) {
 
         return (List<Task>) taskRepo.getTaskByProject(projectId);
+    }
+    @GetMapping("/{taskID}/get")
+    Set<Users> GetParticipants(
+
+            @PathVariable Long taskID
+    ) {
+        Task task = taskRepo.findById(taskID).get();
+        System.out.println(task);
+        Set<Users> enrolled_users = task.getEnrollUsersToTask();
+        System.out.println(enrolled_users);
+        return enrolled_users;
     }
 
     @PutMapping("/updateByID/{id}")
