@@ -1,5 +1,6 @@
 package com.example.backprojet.controllor;
 
+import com.example.backprojet.exception.UsernotFoundException;
 import com.example.backprojet.model.Project;
 import com.example.backprojet.model.Users;
 import com.example.backprojet.repo.ProjectRepo;
@@ -46,7 +47,7 @@ public class ProjectController {
         projectService.deleteProject(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
+    /*
     @PutMapping("/{pprojectId}/enroll/{userid}")
     Project enrollUsers(
             @PathVariable  Long userid,
@@ -59,6 +60,20 @@ public class ProjectController {
         project.enrollUsers(user);
         System.out.println(project);
         return projectRepo.save(project);
+
+    }
+
+     */
+    @PutMapping("/updateByID/{id}")
+    public ResponseEntity<Project> updateProjectbyId(@PathVariable Long id , @RequestBody Project project){
+        Project project1 = projectRepo.findById(id).orElseThrow(()-> new UsernotFoundException("Project by id "+ id + "was not found"));;
+        project1.setProjectTitle(project.getProjectTitle());
+        project1.setProjectDescription(project.getProjectDescription());
+        project1.setProjectDepartement(project.getProjectDepartement());
+        project1.setProjectStartdate(project.getProjectStartdate());
+        project1.setProjectDeadline(project.getProjectDeadline());
+        Project updatedProject = projectRepo.save(project1);
+        return new ResponseEntity<>(updatedProject, HttpStatus.OK);
 
     }
 
@@ -88,7 +103,7 @@ public class ProjectController {
         System.out.println(project);
         return projectRepo.save(project);
     }
-    /*
+
     @PutMapping("/{pprojectId}/enroll/{userid}")
     Project getUsersByProject(
             @PathVariable  Long userid,
@@ -102,7 +117,7 @@ public class ProjectController {
         System.out.println(project);
         return projectRepo.save(project);
     }
-     */
+
     @GetMapping("/{pprojectId}/get")
     List<Users> GetParticipants(
 
