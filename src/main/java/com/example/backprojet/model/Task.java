@@ -38,6 +38,14 @@ public class Task {
     )
     private Set<Users> enrollUsersToTask = new HashSet<>();
 
+    @ManyToMany
+    @JoinTable(
+            name="enroll_Dependencies",
+            joinColumns = @JoinColumn(name="TaskId"),
+            inverseJoinColumns = @JoinColumn(name = "id")
+    )
+    private Set<Dependency> enrollDependenciesToTask = new HashSet<>();
+
 /*
     @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="ProjectId", referencedColumnName = "TaskId")
@@ -135,6 +143,11 @@ public class Task {
     public Set<Users> getEnrollUsersToTask() {
         return enrollUsersToTask;
     }
+
+    public Set<Dependency> getEnrollDependenciesToTask() {
+        return enrollDependenciesToTask;
+    }
+
 /*
     public Project getProject() {
         return project;
@@ -162,5 +175,8 @@ public class Task {
     }
     public void deleteUsersFromTask(Users user) { enrollUsersToTask.remove(user);}
     public void deleteAllUsersFromTask() { enrollUsersToTask.clear();}
+
+    public void enrollDependenciesToTask(Dependency dependency) { enrollDependenciesToTask.add(dependency);}
+
 
 }

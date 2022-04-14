@@ -31,6 +31,7 @@ public class Project implements Serializable {
     private String  ProjectDepartement ;
     private String ProjectStartdate;
     private String ProjectDeadline;
+    private String ProjectStatus;
 
 
 
@@ -43,20 +44,18 @@ public class Project implements Serializable {
     private List<Users> enrolledusers = new ArrayList<>();
 
 
-    public Project(Long projectId, String projectTitle, String projectDescription, String projectDepartement, String projectStartdate, String projectDeadline) {
+    public Project(Long projectId, String projectTitle, String projectDescription, String projectDepartement, String projectStartdate, String projectDeadline, String projectStatus) {
         ProjectId = projectId;
         ProjectTitle = projectTitle;
         ProjectDescription = projectDescription;
         ProjectDepartement = projectDepartement;
         ProjectStartdate = projectStartdate;
         ProjectDeadline = projectDeadline;
+        ProjectStatus = projectStatus;
     }
-
 
     public Project() {
-
     }
-
 
     public Long getProjectId() {
         return ProjectId;
@@ -105,7 +104,15 @@ public class Project implements Serializable {
     public void setProjectDeadline(String projectDeadline) {
         ProjectDeadline = projectDeadline;
     }
-/*
+
+    public String getProjectStatus() {
+        return ProjectStatus;
+    }
+
+    public void setProjectStatus(String projectStatus) {
+        ProjectStatus = projectStatus;
+    }
+    /*
     public Set<Task> getTasks() {
         return tasks;
     }
@@ -126,6 +133,7 @@ public class Project implements Serializable {
                 ", ProjectDepartement='" + ProjectDepartement + '\'' +
                 ", ProjectStartdate='" + ProjectStartdate + '\'' +
                 ", ProjectDeadline='" + ProjectDeadline + '\'' +
+                ", ProjectStatus='" + ProjectStatus + '\'' +
                 '}';
     }
 

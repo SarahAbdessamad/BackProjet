@@ -2,9 +2,10 @@ package com.example.backprojet.controllor;
 
 
 import com.example.backprojet.exception.UsernotFoundException;
-import com.example.backprojet.model.Project;
+import com.example.backprojet.model.Dependency;
 import com.example.backprojet.model.Task;
 import com.example.backprojet.model.Users;
+import com.example.backprojet.repo.DependencyRepo;
 import com.example.backprojet.repo.TaskRepo;
 import com.example.backprojet.repo.UsersRepo;
 import com.example.backprojet.service.TaskService;
@@ -13,7 +14,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -28,6 +28,8 @@ public class TaskController {
     private TaskRepo taskRepo;
     @Autowired
     private UsersRepo usersRepo;
+    @Autowired
+    private DependencyRepo dependencyRepo;
 
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
@@ -130,10 +132,6 @@ public class TaskController {
 
     }
 
-
-
-
-
     /*
     @PutMapping("/{taskId}/enroll/{ProjectId}")
     Task assign(
@@ -149,5 +147,21 @@ public class TaskController {
         return taskRepo.save(task);
     }
      */
+
+    @PutMapping("/{taskId}/Dependencies/{dependencyid}")
+    Task enrollDependenciesToTask(
+            @PathVariable  Long dependencyid,
+            @PathVariable  Long taskId
+    ){
+        Task task = taskRepo.findById(taskId).get();
+        System.out.println(task);
+        Dependency dependency = dependencyRepo.findById(dependencyid).get();
+        System.out.println(dependency);
+        task.enrollDependenciesToTask(dependency);
+        System.out.println(task);
+        return taskRepo.save(task);
+    }
+
+
 
 }

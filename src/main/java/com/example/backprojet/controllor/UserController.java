@@ -33,7 +33,6 @@ public class UserController {
             usersRepo.findAll();
             return ResponseEntity.status(HttpStatus.OK).body(users);
         }
-
      */
     @GetMapping("/all")
     public ResponseEntity<List<Users>> getAllUSERS() {

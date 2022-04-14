@@ -154,4 +154,23 @@ public class ProjectController {
         return filtred_users;
 
     }
+    @RequestMapping("/findTitle/{ProjectTitle}")
+    public List<Project> getProjectByProjectTitle(@PathVariable String ProjectTitle){
+            return (List<Project>) projectRepo.getProjectByProjectTitle(ProjectTitle);
+    }
+    /*@PutMapping("/archive/{ProjectId}")
+    public  ResponseEntity<Project> archived(@PathVariable(value = "id") Long ProjectId) {
+        Project project1 = projectRepo.findById(ProjectId).orElseThrow(()-> new UsernotFoundException("Project by id "+ ProjectId + "was not found"));;
+        System.out.println(project1);
+        project1.setProjectStatus("archived");
+        System.out.println(project1.getProjectStatus());
+        Project updatedProject = projectRepo.save(project1);
+        return new ResponseEntity<>(updatedProject, HttpStatus.OK);
+    }*/
+
+    @PutMapping("/archived/{id}")
+        public void updateProjects (@PathVariable(value = "id") Long ProjectId, @RequestBody Project project) {
+        project.setProjectStatus("archived");
+        projectRepo.save(project);
+    }
 }
