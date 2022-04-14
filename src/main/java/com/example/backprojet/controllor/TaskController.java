@@ -1,13 +1,16 @@
 package com.example.backprojet.controllor;
 
 
+import com.example.backprojet.dto.TaskCreationForm;
 import com.example.backprojet.exception.UsernotFoundException;
 import com.example.backprojet.model.Dependency;
+import com.example.backprojet.model.SubTaskMapping;
 import com.example.backprojet.model.Task;
 import com.example.backprojet.model.Users;
 import com.example.backprojet.repo.DependencyRepo;
 import com.example.backprojet.repo.TaskRepo;
 import com.example.backprojet.repo.UsersRepo;
+import com.example.backprojet.service.SubTaskMappingService;
 import com.example.backprojet.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,23 +34,41 @@ public class TaskController {
     @Autowired
     private DependencyRepo dependencyRepo;
 
+    @Autowired
+    SubTaskMappingService subTaskMappingService;
+
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
     }
 
-    @PostMapping("/addtask")
+    /*@PostMapping("/addtask")
     Task addTask(@RequestBody Task task) {
         return taskRepo.save(task);
+    }*/
+
+    @PostMapping("/addtask")
+    Task addTask(@RequestBody TaskCreationForm taskCreationForm) {
+        Task newTask = taskRepo.save(taskCreationForm.getNewTask());
+        subTaskMappingService.addSubTasks(newTask, taskCreationForm.getSubTasksIdList());
+        return newTask;
     }
 
     @RequestMapping("/find/{id}")
-    public Optional<Task> getTaskById(@PathVariable(value = "id") Long TaskId) {
-        return taskRepo.findById(TaskId);
+    public ResponseEntity<?> getTaskById(@PathVariable(value = "id") Long TaskId) {
+        Task task = null;
+        if (taskRepo.findById(TaskId).isPresent()) {
+            task = taskRepo.findById(TaskId).get();
+            task.setSubTasks(subTaskMappingService.getSubTasks(task));
+        }
+        return new ResponseEntity<>(task, HttpStatus.OK);
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<Task>> getAllTask() {
         List<Task> task = taskRepo.findAll();
+        task.forEach(t -> {
+            t.setSubTasks(subTaskMappingService.getSubTasks(t));
+        });
         return new ResponseEntity<List<Task>>(task, HttpStatus.OK);
     }
 
@@ -102,6 +123,7 @@ public class TaskController {
 
         return (List<Task>) taskRepo.getTaskByProject(projectId);
     }
+
     @GetMapping("/{taskID}/get")
     Set<Users> GetParticipants(
 
@@ -116,8 +138,9 @@ public class TaskController {
 
     @PutMapping("/updateByID/{id}")
 
-    public ResponseEntity<Task> updateGadgetbyId(@PathVariable Long id , @RequestBody Task task){
-        Task task1 = taskRepo.findById(id).orElseThrow(()-> new UsernotFoundException("User by id "+ id + "was not found"));;
+    public ResponseEntity<Task> updateGadgetbyId(@PathVariable Long id, @RequestBody Task task) {
+        Task task1 = taskRepo.findById(id).orElseThrow(() -> new UsernotFoundException("User by id " + id + "was not found"));
+        ;
         task1.setTitle(task.getTitle());
         task1.setDescription(task.getDescription());
         task1.setSpeciality(task.getSpeciality());
@@ -150,9 +173,9 @@ public class TaskController {
 
     @PutMapping("/{taskId}/Dependencies/{dependencyid}")
     Task enrollDependenciesToTask(
-            @PathVariable  Long dependencyid,
-            @PathVariable  Long taskId
-    ){
+            @PathVariable Long dependencyid,
+            @PathVariable Long taskId
+    ) {
         Task task = taskRepo.findById(taskId).get();
         System.out.println(task);
         Dependency dependency = dependencyRepo.findById(dependencyid).get();
@@ -162,6 +185,17 @@ public class TaskController {
         return taskRepo.save(task);
     }
 
-
-
+    /*@PutMapping("/{taskId}/Dependency/{id}")
+    Task enrolledtasks(
+            @PathVariable Long taskId,
+            @PathVariable Long id
+    ) {
+        Task task = taskRepo.findById(taskId).get();
+        System.out.println(task);
+        Task task1 = taskRepo.findById(id).get();
+        System.out.println(task1);
+        // task.enrolledtasks(task1);
+        System.out.println(task);
+        return taskRepo.save(task);
+    }*/
 }
