@@ -14,11 +14,11 @@ import java.util.List;
 public interface TaskRepo extends JpaRepository<Task, Long>, CrudRepository<Task, Long> {
     @Query("SELECT u FROM Task u WHERE u.projectId = :projectId")
     List<Task> getTaskByProject(@Param("projectId") String projectId);
-/*
-    public  Task updateTaskbyId(Task task) {
-        return taskRepo.save(task);
-    }
 
- */
+
+
+    @Override
+    public  Task save(Task task) ;
+
 }
 

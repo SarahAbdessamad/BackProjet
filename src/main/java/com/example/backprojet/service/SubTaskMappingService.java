@@ -17,6 +17,10 @@ public class SubTaskMappingService {
     TaskRepo taskRepository;
 
     @Autowired
+    SubTaskMappingRepo repoSubtask;
+
+
+    @Autowired
     SubTaskMappingRepo subTaskMappingRepository;
 
     public List<Task> getSubTasks(Task task) {
@@ -28,11 +32,14 @@ public class SubTaskMappingService {
         return subTasks;
     }
 
-    public void addSubTasks(Task task, List<Long> subTasksIdList) {
+    public Task addSubTasks(Task task, List<Long> subTasksIdList) {
         List<Task> subTasks = new ArrayList<>();
         subTasksIdList.forEach(id -> {
-            subTasks.add(taskRepository.findById(id).get());
+            Task subTask = taskRepository.findById(id).get();
+            subTasks.add(subTask);
+            subTaskMappingRepository.save(new SubTaskMapping(task, subTask));
         });
         task.setSubTasks(subTasks);
+        return task;
     }
 }

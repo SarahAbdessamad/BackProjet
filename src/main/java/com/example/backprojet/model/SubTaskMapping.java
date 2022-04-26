@@ -43,4 +43,9 @@ public class SubTaskMapping {
 
     public SubTaskMapping() {
     }
+
+    public SubTaskMapping(Task parentTask, Task subTask) {
+        this.parentTask = parentTask;
+        this.subTask = subTask;
+    }
 }
