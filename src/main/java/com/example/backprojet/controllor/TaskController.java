@@ -3,6 +3,7 @@ package com.example.backprojet.controllor;
 
 import com.example.backprojet.dto.TaskCreationForm;
 import com.example.backprojet.exception.UsernotFoundException;
+import com.example.backprojet.model.SubTaskMapping;
 import com.example.backprojet.model.Task;
 import com.example.backprojet.model.Users;
 import com.example.backprojet.repo.TaskRepo;
@@ -15,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @RestController
@@ -27,7 +29,6 @@ public class TaskController {
     private TaskRepo taskRepo;
     @Autowired
     private UsersRepo usersRepo;
-
 
     @Autowired
     SubTaskMappingService subTaskMappingService;
@@ -44,10 +45,8 @@ public class TaskController {
     @PostMapping("/addtask")
     Task addTask(@RequestBody TaskCreationForm taskCreationForm) {
         Task newTask = taskRepo.save(taskCreationForm.getNewTask());
-        Task neweestTask = subTaskMappingService.addSubTasks(newTask, taskCreationForm.getSubTasksIdList());
-        taskRepo.save(neweestTask);
-
-        return neweestTask;
+        subTaskMappingService.addSubTasks(newTask, taskCreationForm.getSubTasksIdList());
+        return newTask;
     }
 
     @RequestMapping("/find/{id}")
@@ -147,7 +146,6 @@ public class TaskController {
         task1.setMaxStart(task.getMaxStart());
         task1.setMaxFinish(task.getMaxFinish());
         task1.setProjectId(task.getProjectId());
-        //task1.setSubTasks(task.getSubTasks());
         Task updatedGadget = taskRepo.save(task1);
         return new ResponseEntity<>(updatedGadget, HttpStatus.OK);
 
@@ -169,20 +167,6 @@ public class TaskController {
     }
      */
 
-   /* @PutMapping("/{taskId}/Dependencies/{dependencyid}")
-    Task enrollDependenciesToTask(
-            @PathVariable Long dependencyid,
-            @PathVariable Long taskId
-    ) {
-        Task task = taskRepo.findById(taskId).get();
-        System.out.println(task);
-        Dependency dependency = dependencyRepo.findById(dependencyid).get();
-        System.out.println(dependency);
-        task.enrollDependenciesToTask(dependency);
-        System.out.println(task);
-        return taskRepo.save(task);
-    }
-    */
 
     /*@PutMapping("/{taskId}/Dependency/{id}")
     Task enrolledtasks(
@@ -197,6 +181,4 @@ public class TaskController {
         System.out.println(task);
         return taskRepo.save(task);
     }*/
-
-
 }

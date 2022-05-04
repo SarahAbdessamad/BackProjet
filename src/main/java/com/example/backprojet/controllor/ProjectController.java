@@ -30,6 +30,7 @@ public class ProjectController {
     @PostMapping("/addproject")
     void addProject (@RequestBody Project project) {
         projectRepo.save(project);
+
     }
 
     @RequestMapping("/find/{id}")
@@ -170,7 +171,27 @@ public class ProjectController {
 
     @PutMapping("/archived/{id}")
         public void updateProjects (@PathVariable(value = "id") Long ProjectId, @RequestBody Project project) {
-        project.setProjectStatus("archived");
+        if(Objects.equals(project.getProjectStatus(), "archived")){
+            project.setProjectStatus("done");
+        }
+        else {
+            project.setProjectStatus("archived");
+        }
         projectRepo.save(project);
     }
+
+    @PutMapping("/unarchived/{id}")
+    public void unarchiveProjects (@PathVariable(value = "id") Long ProjectId, @RequestBody Project project) {
+
+            project.setProjectStatus("in progress");
+        projectRepo.save(project);
+    }
+
+    @PutMapping("/markdone/{id}")
+    public void markDone (@PathVariable(value = "id") Long ProjectId, @RequestBody Project project) {
+
+        project.setProjectStatus("done");
+        projectRepo.save(project);
+    }
+
 }

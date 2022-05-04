@@ -25,6 +25,32 @@ public class Task {
     private String MaxStart;
     private String MaxFinish;
     private String projectId;
+    private String Status;
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "TaskId=" + TaskId +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", speciality='" + speciality + '\'' +
+                ", Priority='" + Priority + '\'' +
+                ", Startdate='" + Startdate + '\'' +
+                ", Deadline='" + Deadline + '\'' +
+                ", MaxStart='" + MaxStart + '\'' +
+                ", MaxFinish='" + MaxFinish + '\'' +
+                ", projectId='" + projectId + '\'' +
+                ", Status='" + Status + '\'' +
+                '}';
+    }
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String status) {
+        Status = status;
+    }
 
     @Transient
     private List<Task> subTasks;
@@ -192,20 +218,7 @@ public class Task {
 
  */
 
-    @Override
-    public String toString() {
-        return "Task{" +
-                "TaskId=" + TaskId +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", speciality='" + speciality + '\'' +
-                ", Priority='" + Priority + '\'' +
-                ", Startdate='" + Startdate + '\'' +
-                ", Deadline='" + Deadline + '\'' +
-                ", MaxStart='" + MaxStart + '\'' +
-                ", MaxFinish='" + MaxFinish + '\'' +
-                '}';
-    }
+
 
     public void enrollUsersToTask(Users user) {
         enrollUsersToTask.add(user);
