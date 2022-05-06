@@ -133,10 +133,8 @@ public class TaskController {
     }
 
     @PutMapping("/updateByID/{id}")
-
     public ResponseEntity<Task> updateGadgetbyId(@PathVariable Long id, @RequestBody Task task) {
         Task task1 = taskRepo.findById(id).orElseThrow(() -> new UsernotFoundException("User by id " + id + "was not found"));
-        ;
         task1.setTitle(task.getTitle());
         task1.setDescription(task.getDescription());
         task1.setSpeciality(task.getSpeciality());
@@ -150,6 +148,7 @@ public class TaskController {
         return new ResponseEntity<>(updatedGadget, HttpStatus.OK);
 
     }
+
 
     /*
     @PutMapping("/{taskId}/enroll/{ProjectId}")
@@ -181,4 +180,12 @@ public class TaskController {
         System.out.println(task);
         return taskRepo.save(task);
     }*/
+
+    @PutMapping("/updateStatus/{id}")
+    public void updateStatus(@PathVariable Long id, @RequestBody Task task) {
+        Task task2 = taskRepo.findById(id).orElseThrow(() -> new UsernotFoundException("User by id " + id + "was not found"));
+        task2.setStatus(task.getStatus());
+        taskRepo.save(task2);
+    }
+
 }

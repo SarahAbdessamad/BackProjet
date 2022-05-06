@@ -34,6 +34,7 @@ public class Project implements Serializable {
     private String ProjectStatus;
     private String ProjectLocation;
     private long Effort_Days;
+    private boolean favorite;
 
     public boolean isFavorite() {
         return favorite;
@@ -43,7 +44,6 @@ public class Project implements Serializable {
         this.favorite = favorite;
     }
 
-    private boolean favorite;
 
 
     @ManyToMany
