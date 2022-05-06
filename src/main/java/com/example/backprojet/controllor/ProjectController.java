@@ -73,6 +73,8 @@ public class ProjectController {
         project1.setProjectDepartement(project.getProjectDepartement());
         project1.setProjectStartdate(project.getProjectStartdate());
         project1.setProjectDeadline(project.getProjectDeadline());
+        project1.setProjectLocation(project.getProjectLocation());
+        project1.setEffort_Days(project.getEffort_Days());
         Project updatedProject = projectRepo.save(project1);
         return new ResponseEntity<>(updatedProject, HttpStatus.OK);
 
@@ -159,6 +161,12 @@ public class ProjectController {
     public List<Project> getProjectByProjectTitle(@PathVariable String ProjectTitle){
             return (List<Project>) projectRepo.getProjectByProjectTitle(ProjectTitle);
     }
+
+    @RequestMapping("/findLocation/{ProjectLocation}")
+    public List<Project> getProjectByProjectLocation(@PathVariable String ProjectLocation){
+        return (List<Project>) projectRepo.getProjectByProjectLocation(ProjectLocation);
+    }
+
     /*@PutMapping("/archive/{ProjectId}")
     public  ResponseEntity<Project> archived(@PathVariable(value = "id") Long ProjectId) {
         Project project1 = projectRepo.findById(ProjectId).orElseThrow(()-> new UsernotFoundException("Project by id "+ ProjectId + "was not found"));;
@@ -193,5 +201,6 @@ public class ProjectController {
         project.setProjectStatus("done");
         projectRepo.save(project);
     }
+
 
 }

@@ -32,8 +32,18 @@ public class Project implements Serializable {
     private String ProjectStartdate;
     private String ProjectDeadline;
     private String ProjectStatus;
+    private String ProjectLocation;
+    private long Effort_Days;
 
+    public boolean isFavorite() {
+        return favorite;
+    }
 
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    private boolean favorite;
 
 
     @ManyToMany
@@ -53,6 +63,7 @@ public class Project implements Serializable {
         ProjectStartdate = projectStartdate;
         ProjectDeadline = projectDeadline;
         ProjectStatus = projectStatus;
+
     }
 
     public Project() {
@@ -120,11 +131,28 @@ public class Project implements Serializable {
 
  */
 
+    public String getProjectLocation() {
+        return ProjectLocation;
+    }
+
+    public void setProjectLocation(String projectLocation) {
+        ProjectLocation = projectLocation;
+    }
+
+    public long getEffort_Days() {
+        return Effort_Days;
+    }
+
+    public void setEffort_Days(long effort_Days) {
+        Effort_Days = effort_Days;
+    }
 
 
     public List<Users> getEnrolledusers() {
         return enrolledusers;
     }
+
+
     @Override
     public String toString() {
         return "Project{" +
@@ -135,6 +163,9 @@ public class Project implements Serializable {
                 ", ProjectStartdate='" + ProjectStartdate + '\'' +
                 ", ProjectDeadline='" + ProjectDeadline + '\'' +
                 ", ProjectStatus='" + ProjectStatus + '\'' +
+                ", ProjectLocation='" + ProjectLocation + '\'' +
+                ", Effort_Days=" + Effort_Days +
+                ", favorite=" + favorite +
                 '}';
     }
 
