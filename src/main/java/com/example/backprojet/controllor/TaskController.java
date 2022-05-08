@@ -144,6 +144,10 @@ public class TaskController {
         task1.setMaxStart(task.getMaxStart());
         task1.setMaxFinish(task.getMaxFinish());
         task1.setProjectId(task.getProjectId());
+        task1.setAlmostfinished(task.isAlmostfinished());
+        task1.setBlocked(task.isBlocked());
+        task1.setUrgent(task.isUrgent());
+        task1.setProgress(task.getProgress());
         Task updatedGadget = taskRepo.save(task1);
         return new ResponseEntity<>(updatedGadget, HttpStatus.OK);
 
@@ -181,10 +185,10 @@ public class TaskController {
         return taskRepo.save(task);
     }*/
 
-    @PutMapping("/updateStatus/{id}")
-    public void updateStatus(@PathVariable Long id, @RequestBody Task task) {
+    @PutMapping("/updateStatus/{id}/{status}")
+    public void updateStatus(@PathVariable Long id,@PathVariable String status) {
         Task task2 = taskRepo.findById(id).orElseThrow(() -> new UsernotFoundException("User by id " + id + "was not found"));
-        task2.setStatus(task.getStatus());
+        task2.setStatus(status);
         taskRepo.save(task2);
     }
 

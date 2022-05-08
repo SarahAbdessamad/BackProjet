@@ -26,6 +26,43 @@ public class Task {
     private String MaxFinish;
     private String projectId;
     private String Status;
+    private boolean blocked;
+    private boolean urgent;
+    private boolean almostfinished;
+    private long progress;
+
+    public long getProgress() {
+        return progress;
+    }
+
+    public void setProgress(long progress) {
+        this.progress = progress;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+
+    public boolean isUrgent() {
+        return urgent;
+    }
+
+    public void setUrgent(boolean urgent) {
+        this.urgent = urgent;
+    }
+
+    public boolean isAlmostfinished() {
+        return almostfinished;
+    }
+
+    public void setAlmostfinished(boolean almostfinished) {
+        this.almostfinished = almostfinished;
+    }
+
 
     @Override
     public String toString() {
@@ -41,6 +78,10 @@ public class Task {
                 ", MaxFinish='" + MaxFinish + '\'' +
                 ", projectId='" + projectId + '\'' +
                 ", Status='" + Status + '\'' +
+                ", blocked=" + blocked +
+                ", urgent=" + urgent +
+                ", almostfinished=" + almostfinished +
+                ", progress=" + progress +
                 '}';
     }
 
@@ -118,6 +159,7 @@ public class Task {
         Deadline = deadline;
         MaxStart = maxStart;
         MaxFinish = maxFinish;
+        this.progress=0;
     }
 
     public Task() {
