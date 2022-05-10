@@ -17,7 +17,7 @@ public class Users implements Serializable {
     private Long id;
     private String nom;
     private String prenom;
-    private String speciality;
+    private String skill;
     private String departement;
     private int experience;
     private String post;
@@ -31,11 +31,11 @@ public class Users implements Serializable {
     }
 
     public String getSpeciality() {
-        return speciality;
+        return skill;
     }
 
     public void setSpeciality(String speciality) {
-        this.speciality = speciality;
+        this.skill = speciality;
     }
 
     public String getDepartement() {
@@ -112,7 +112,7 @@ public class Users implements Serializable {
                 "id=" + id +
                 ", nom='" + nom + '\'' +
                 ", prenom='" + prenom + '\'' +
-                ", speciality='" + speciality + '\'' +
+                ", speciality='" + skill + '\'' +
                 ", departement='" + departement + '\'' +
                 ", experience=" + experience +
                 ", post='" + post + '\'' +

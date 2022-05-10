@@ -3,6 +3,7 @@ package com.example.backprojet.controllor;
 
 import com.example.backprojet.dto.TaskCreationForm;
 import com.example.backprojet.exception.UsernotFoundException;
+import com.example.backprojet.model.Project;
 import com.example.backprojet.model.SubTaskMapping;
 import com.example.backprojet.model.Task;
 import com.example.backprojet.model.Users;
@@ -137,7 +138,7 @@ public class TaskController {
         Task task1 = taskRepo.findById(id).orElseThrow(() -> new UsernotFoundException("User by id " + id + "was not found"));
         task1.setTitle(task.getTitle());
         task1.setDescription(task.getDescription());
-        task1.setSpeciality(task.getSpeciality());
+        task1.setRequiredSkill(task.getRequiredSkill());
         task1.setPriority(task.getPriority());
         task1.setStartdate(task.getStartdate());
         task1.setDeadline(task.getDeadline());
@@ -187,5 +188,22 @@ public class TaskController {
         task2.setStatus(task.getStatus());
         taskRepo.save(task2);
     }
+    /*
+    @GetMapping("/all")
+    public ResponseEntity<List<Project>> getAllBlocked() {
+        List<Task> task = taskRepo.findAll();
+        return new ResponseEntity<List<Task>>(task, HttpStatus.OK);
+    }
+
+     */
+    @PutMapping("/updateEtiquette/{id}")
+    public void updateEtiquette(@PathVariable Long id, @RequestBody Task task) {
+        Task task3 = taskRepo.findById(id).orElseThrow(() -> new UsernotFoundException("User by id " + id + "was not found"));
+        task3.setBlocked(task.getBlocked());
+        task3.setUrgent(task.getUrgent());
+        task3.setAlmostDone(task.getAlmostDone());
+        taskRepo.save(task3);
+    }
+
 
 }

@@ -2,6 +2,7 @@ package com.example.backprojet.controllor;
 
 import com.example.backprojet.exception.UsernotFoundException;
 import com.example.backprojet.model.Project;
+import com.example.backprojet.model.Task;
 import com.example.backprojet.model.Users;
 import com.example.backprojet.repo.ProjectRepo;
 import com.example.backprojet.repo.UsersRepo;
@@ -17,26 +18,28 @@ import java.util.*;
 @RequestMapping("/project")
 public class ProjectController {
     private Project project;
-    private  ProjectService projectService;
+    private ProjectService projectService;
 
     @Autowired
-    private  ProjectRepo projectRepo;
+    private ProjectRepo projectRepo;
     @Autowired
     private UsersRepo usersRepo;
-        public ProjectController(ProjectService projectService){
-        this.projectService=projectService;
-        }
+
+    public ProjectController(ProjectService projectService) {
+        this.projectService = projectService;
+    }
 
     @PostMapping("/addproject")
-    void addProject (@RequestBody Project project) {
+    void addProject(@RequestBody Project project) {
         projectRepo.save(project);
 
     }
 
     @RequestMapping("/find/{id}")
-    public Optional<Project> getProjectById (@PathVariable(value = "id") Long ProjectId) {
+    public Optional<Project> getProjectById(@PathVariable(value = "id") Long ProjectId) {
         return projectRepo.findById(ProjectId);
     }
+
     @GetMapping("/all")
     public ResponseEntity<List<Project>> getAllProject() {
         List<Project> project = projectRepo.findAll();
@@ -48,6 +51,7 @@ public class ProjectController {
         projectService.deleteProject(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     /*
     @PutMapping("/{pprojectId}/enroll/{userid}")
     Project enrollUsers(
@@ -66,8 +70,9 @@ public class ProjectController {
 
      */
     @PutMapping("/updateByID/{id}")
-    public ResponseEntity<Project> updateProjectbyId(@PathVariable Long id , @RequestBody Project project){
-        Project project1 = projectRepo.findById(id).orElseThrow(()-> new UsernotFoundException("Project by id "+ id + "was not found"));;
+    public ResponseEntity<Project> updateProjectbyId(@PathVariable Long id, @RequestBody Project project) {
+        Project project1 = projectRepo.findById(id).orElseThrow(() -> new UsernotFoundException("Project by id " + id + "was not found"));
+        ;
         project1.setProjectTitle(project.getProjectTitle());
         project1.setProjectDescription(project.getProjectDescription());
         project1.setProjectDepartement(project.getProjectDepartement());
@@ -82,9 +87,9 @@ public class ProjectController {
 
     @PutMapping("/{pprojectId}/delete/{userid}")
     Project deleteUsers(
-            @PathVariable  Long userid,
-            @PathVariable  Long pprojectId
-    ){
+            @PathVariable Long userid,
+            @PathVariable Long pprojectId
+    ) {
         Project project = projectRepo.findById(pprojectId).get();
         System.out.println(project);
         Users user = usersRepo.findById(userid).get();
@@ -97,8 +102,8 @@ public class ProjectController {
 
     @PutMapping("/{pprojectId}/deleteAll")
     Project deleteAllUsers(
-            @PathVariable  Long pprojectId
-    ){
+            @PathVariable Long pprojectId
+    ) {
         Project project = projectRepo.findById(pprojectId).get();
         System.out.println(project);
 
@@ -109,9 +114,9 @@ public class ProjectController {
 
     @PutMapping("/{pprojectId}/enroll/{userid}")
     Project getUsersByProject(
-            @PathVariable  Long userid,
-            @PathVariable  Long pprojectId
-    ){
+            @PathVariable Long userid,
+            @PathVariable Long pprojectId
+    ) {
         Project project = projectRepo.findById(pprojectId).get();
         System.out.println(project);
         Users user = usersRepo.findById(userid).get();
@@ -132,19 +137,20 @@ public class ProjectController {
         System.out.println(enrolled_users);
         return enrolled_users;
     }
+
     @GetMapping("/{pprojectId}/getspec/{speciality}")
     List<Users> specialityOfUser(
-            @PathVariable  String speciality,
-            @PathVariable  Long pprojectId
-    ){
+            @PathVariable String speciality,
+            @PathVariable Long pprojectId
+    ) {
         List<Users> enrolled_users = this.GetParticipants(pprojectId);
-        List<Users>  filtred_users =  new ArrayList<>();
+        List<Users> filtred_users = new ArrayList<>();
         Iterator<Users> i = enrolled_users.iterator();
         System.out.println("etape 0");
         System.out.println(filtred_users);
         while (i.hasNext()) {
-            Users i2= i.next();
-            if(Objects.equals(i2.getSpeciality(), speciality)) {
+            Users i2 = i.next();
+            if (Objects.equals(i2.getSpeciality(), speciality)) {
 
                 System.out.println("etape 1");
                 //System.out.println(i.next());
@@ -157,13 +163,14 @@ public class ProjectController {
         return filtred_users;
 
     }
+
     @RequestMapping("/findTitle/{ProjectTitle}")
-    public List<Project> getProjectByProjectTitle(@PathVariable String ProjectTitle){
-            return (List<Project>) projectRepo.getProjectByProjectTitle(ProjectTitle);
+    public List<Project> getProjectByProjectTitle(@PathVariable String ProjectTitle) {
+        return (List<Project>) projectRepo.getProjectByProjectTitle(ProjectTitle);
     }
 
     @RequestMapping("/findLocation/{ProjectLocation}")
-    public List<Project> getProjectByProjectLocation(@PathVariable String ProjectLocation){
+    public List<Project> getProjectByProjectLocation(@PathVariable String ProjectLocation) {
         return (List<Project>) projectRepo.getProjectByProjectLocation(ProjectLocation);
     }
 
@@ -178,29 +185,51 @@ public class ProjectController {
     }*/
 
     @PutMapping("/archived/{id}")
-        public void updateProjects (@PathVariable(value = "id") Long ProjectId, @RequestBody Project project) {
-        if(Objects.equals(project.getProjectStatus(), "archived")){
+    public void updateProjects(@PathVariable(value = "id") Long ProjectId, @RequestBody Project project) {
+        if (Objects.equals(project.getProjectStatus(), "archived")) {
             project.setProjectStatus("done");
-        }
-        else {
+        } else {
             project.setProjectStatus("archived");
         }
         projectRepo.save(project);
     }
 
-    @PutMapping("/unarchived/{id}")
-    public void unarchiveProjects (@PathVariable(value = "id") Long ProjectId, @RequestBody Project project) {
+    /*
+        @PutMapping("/unarchived/{id}")
+        public void unarchiveProjects (@PathVariable(value = "id") Long ProjectId, @RequestBody Project project) {
 
-            project.setProjectStatus("in progress");
+                project.setProjectStatus("in progress");
+            projectRepo.save(project);
+        }
+
+        @PutMapping("/markdone/{id}")
+        public void markDone (@PathVariable(value = "id") Long ProjectId, @RequestBody Project project) {
+            project.setProjectStatus("done");
+            projectRepo.save(project);
+        }
+
+     */
+    @PutMapping("/ProjectStatus/{id}/{ProjectStatus}")
+    public Project markStatus(@PathVariable(value = "id") Long ProjectId, @PathVariable(value = "ProjectStatus") String ProjectStatus) {
+        Project project = projectRepo.findById(ProjectId).get();
+        project.setProjectStatus(ProjectStatus);
         projectRepo.save(project);
+        return project;
     }
 
-    @PutMapping("/markdone/{id}")
-    public void markDone (@PathVariable(value = "id") Long ProjectId, @RequestBody Project project) {
-
-        project.setProjectStatus("done");
-        projectRepo.save(project);
+    @RequestMapping("/findClient/{Client}")
+    public List<Project> getProjectByClient(@PathVariable String Client) {
+        return (List<Project>) projectRepo.getProjectByClient(Client);
     }
 
+    @RequestMapping("/findProjectStatus/{ProjectStatus}")
+    public List<Project> getProjectByProjectStatus(@PathVariable String ProjectStatus) {
+        return (List<Project>) projectRepo.getProjectByProjectStatus(ProjectStatus);
+    }
 
+    @GetMapping("/unarchived")
+    public ResponseEntity<List<Project>> getUnarchivedProjects() {
+        List<Project> project = (List<Project>) projectRepo.getUnarchivedProject();
+        return new ResponseEntity<List<Project>>(project, HttpStatus.OK);
+    }
 }
