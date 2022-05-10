@@ -34,17 +34,26 @@ public class Project implements Serializable {
     private String ProjectStatus;
     private String ProjectLocation;
     private long Effort_Days;
-    private boolean favorite;
+    private boolean Favorite;
+    private String Client;
 
     public boolean isFavorite() {
-        return favorite;
+        return Favorite;
     }
 
     public void setFavorite(boolean favorite) {
-        this.favorite = favorite;
+        this.Favorite = favorite;
     }
 
 
+
+    public String getClient() {
+        return Client;
+    }
+
+    public void setClient(String client) {
+        Client = client;
+    }
 
     @ManyToMany
     @JoinTable(
@@ -55,7 +64,7 @@ public class Project implements Serializable {
     private List<Users> enrolledusers = new ArrayList<>();
 
 
-    public Project(Long projectId, String projectTitle, String projectDescription, String projectDepartement, String projectStartdate, String projectDeadline, String projectStatus) {
+    public Project(Long projectId, String projectTitle, String projectDescription, String projectDepartement, String projectStartdate, String projectDeadline, String projectStatus, String projectLocation, long effort_Days, boolean favorite, String client) {
         ProjectId = projectId;
         ProjectTitle = projectTitle;
         ProjectDescription = projectDescription;
@@ -63,7 +72,10 @@ public class Project implements Serializable {
         ProjectStartdate = projectStartdate;
         ProjectDeadline = projectDeadline;
         ProjectStatus = projectStatus;
-
+        ProjectLocation = projectLocation;
+        Effort_Days = effort_Days;
+        Favorite = favorite;
+        Client = client;
     }
 
     public Project() {
@@ -165,7 +177,8 @@ public class Project implements Serializable {
                 ", ProjectStatus='" + ProjectStatus + '\'' +
                 ", ProjectLocation='" + ProjectLocation + '\'' +
                 ", Effort_Days=" + Effort_Days +
-                ", favorite=" + favorite +
+                ", Favorite=" + Favorite +
+                ", Client='" + Client + '\'' +
                 '}';
     }
 

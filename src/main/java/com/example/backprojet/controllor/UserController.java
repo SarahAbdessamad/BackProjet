@@ -81,8 +81,8 @@ public class UserController {
         return (List<Users>) usersRepo.findByExperience();
 
 }
-    @RequestMapping("/findUser/{speciality}")
-    public List<Users> findBySpeciality(@PathVariable String speciality){
-        return (List<Users>) usersRepo.findBySpeciality(speciality);
+    @RequestMapping("/findUser/{skill}")
+    public List<Users> findBySpeciality(@PathVariable String skill){
+        return (List<Users>) usersRepo.findBySkill(skill);
     }
 }

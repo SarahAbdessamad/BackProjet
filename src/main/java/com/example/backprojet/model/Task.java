@@ -18,7 +18,7 @@ public class Task {
     private String title;
     @Column(length = 2048)
     private String description;
-    private String speciality;
+    private String requiredSkill;
     private String Priority;
     private String Startdate;
     private String Deadline;
@@ -26,43 +26,9 @@ public class Task {
     private String MaxFinish;
     private String projectId;
     private String Status;
-    private boolean blocked;
-    private boolean urgent;
-    private boolean almostfinished;
-    private long progress;
-
-    public long getProgress() {
-        return progress;
-    }
-
-    public void setProgress(long progress) {
-        this.progress = progress;
-    }
-
-    public boolean isBlocked() {
-        return blocked;
-    }
-
-    public void setBlocked(boolean blocked) {
-        this.blocked = blocked;
-    }
-
-    public boolean isUrgent() {
-        return urgent;
-    }
-
-    public void setUrgent(boolean urgent) {
-        this.urgent = urgent;
-    }
-
-    public boolean isAlmostfinished() {
-        return almostfinished;
-    }
-
-    public void setAlmostfinished(boolean almostfinished) {
-        this.almostfinished = almostfinished;
-    }
-
+    private String urgent;
+    private String almostDone;
+    private String blocked;
 
     @Override
     public String toString() {
@@ -70,7 +36,7 @@ public class Task {
                 "TaskId=" + TaskId +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", speciality='" + speciality + '\'' +
+                ", requiredSkill='" + requiredSkill + '\'' +
                 ", Priority='" + Priority + '\'' +
                 ", Startdate='" + Startdate + '\'' +
                 ", Deadline='" + Deadline + '\'' +
@@ -78,10 +44,9 @@ public class Task {
                 ", MaxFinish='" + MaxFinish + '\'' +
                 ", projectId='" + projectId + '\'' +
                 ", Status='" + Status + '\'' +
-                ", blocked=" + blocked +
-                ", urgent=" + urgent +
-                ", almostfinished=" + almostfinished +
-                ", progress=" + progress +
+                ", urgent='" + urgent + '\'' +
+                ", almostDone='" + almostDone + '\'' +
+                ", blocked='" + blocked + '\'' +
                 '}';
     }
 
@@ -149,17 +114,21 @@ public class Task {
     private Set<Task> listOfTasks = new HashSet<>();*/
 
 
-    public Task(Long taskId, String title, String description, String speciality, String priority, String startdate, String deadline, String maxStart, String maxFinish) {
+    public Task(Long taskId, String title, String description, String requiredSkill, String priority, String startdate, String deadline, String maxStart, String maxFinish, String projectId, String status, String urgent, String almostDone, String blocked) {
         TaskId = taskId;
         this.title = title;
         this.description = description;
-        this.speciality = speciality;
+        this.requiredSkill = requiredSkill;
         Priority = priority;
         Startdate = startdate;
         Deadline = deadline;
         MaxStart = maxStart;
         MaxFinish = maxFinish;
-        this.progress=0;
+        this.projectId = projectId;
+        Status = status;
+        this.urgent = urgent;
+        this.almostDone = almostDone;
+        this.blocked = blocked;
     }
 
     public Task() {
@@ -190,12 +159,12 @@ public class Task {
         this.description = description;
     }
 
-    public String getSpeciality() {
-        return speciality;
+    public String getRequiredSkill() {
+        return requiredSkill;
     }
 
-    public void setSpeciality(String speciality) {
-        this.speciality = speciality;
+    public void setRequiredSkill(String requiredSkill) {
+        this.requiredSkill = requiredSkill;
     }
 
     public String getPriority() {
@@ -241,7 +210,32 @@ public class Task {
     public Set<Users> getEnrollUsersToTask() {
         return enrollUsersToTask;
     }
-/*
+
+    public String getUrgent() {
+        return urgent;
+    }
+
+    public void setUrgent(String urgent) {
+        this.urgent = urgent;
+    }
+
+    public String getAlmostDone() {
+        return almostDone;
+    }
+
+    public void setAlmostDone(String almostDone) {
+        this.almostDone = almostDone;
+    }
+
+    public String getBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(String blocked) {
+        this.blocked = blocked;
+    }
+
+    /*
     public Set<Dependency> getEnrollDependenciesToTask() {
         return enrollDependenciesToTask;
     }

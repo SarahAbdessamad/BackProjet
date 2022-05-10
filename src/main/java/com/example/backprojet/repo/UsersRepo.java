@@ -26,7 +26,7 @@ public interface UsersRepo extends JpaRepository<Users, Long> {
     @Query("SELECT u FROM Users u ORDER BY u.experience DESC")
     public Iterable<Users> findByExperience();
 
-    @Query("SELECT u FROM Users u WHERE u.speciality = :speciality ")
-    public Iterable<Users> findBySpeciality(@Param("speciality") String speciality);
+    @Query("SELECT u FROM Users u WHERE u.skill = :skill ")
+    public Iterable<Users> findBySkill(@Param("skill") String skill);
 
 }

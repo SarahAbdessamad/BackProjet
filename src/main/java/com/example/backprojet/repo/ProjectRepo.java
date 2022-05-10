@@ -18,4 +18,14 @@ public interface ProjectRepo extends JpaRepository<Project, Long>, CrudRepositor
 
     @Query("SELECT p FROM Project p WHERE p.ProjectLocation LIKE CONCAT('%',:ProjectLocation,'%')   ")
     public Iterable<Project> getProjectByProjectLocation(@Param("ProjectLocation") String ProjectLocation);
+
+    @Query("SELECT p FROM Project p WHERE p.ProjectStatus LIKE CONCAT('%',:ProjectStatus,'%')   ")
+    public Iterable<Project> getProjectByProjectStatus(@Param("ProjectStatus") String ProjectStatus);
+
+    @Query("SELECT p FROM Project p WHERE p.Client LIKE CONCAT('%',:Client,'%')   ")
+    public Iterable<Project> getProjectByClient(@Param("Client") String Client);
+
+    @Query("SELECT p FROM Project p WHERE p.ProjectStatus <> 'archived' " )
+    public Iterable<Project> getUnarchivedProject();
+
 }
