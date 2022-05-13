@@ -30,6 +30,7 @@ public class EpicController {
 
     @PostMapping("/addepic")
     void addEpic(@RequestBody Epic epic) {
+        System.out.println("epic");
         epicRepo.save(epic);
     }
 

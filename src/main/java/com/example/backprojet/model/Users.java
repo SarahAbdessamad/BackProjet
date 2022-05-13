@@ -18,6 +18,28 @@ public class Users implements Serializable {
     private String nom;
     private String prenom;
     private String skill;
+
+    @Override
+    public String toString() {
+        return "Users{" +
+                "id=" + id +
+                ", nom='" + nom + '\'' +
+                ", prenom='" + prenom + '\'' +
+                ", skill='" + skill + '\'' +
+                ", departement='" + departement + '\'' +
+                ", experience=" + experience +
+                ", post='" + post + '\'' +
+                '}';
+    }
+
+    public String getSkill() {
+        return skill;
+    }
+
+    public void setSkill(String skill) {
+        this.skill = skill;
+    }
+
     private String departement;
     private int experience;
     private String post;
@@ -30,13 +52,7 @@ public class Users implements Serializable {
         this.post = post;
     }
 
-    public String getSpeciality() {
-        return skill;
-    }
 
-    public void setSpeciality(String speciality) {
-        this.skill = speciality;
-    }
 
     public String getDepartement() {
         return departement;
@@ -106,16 +122,5 @@ public class Users implements Serializable {
         return listTasks;
     }
 
-    @Override
-    public String toString() {
-        return "Users{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", speciality='" + skill + '\'' +
-                ", departement='" + departement + '\'' +
-                ", experience=" + experience +
-                ", post='" + post + '\'' +
-                '}';
-    }
+
 }

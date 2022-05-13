@@ -150,7 +150,7 @@ public class ProjectController {
         System.out.println(filtred_users);
         while (i.hasNext()) {
             Users i2 = i.next();
-            if (Objects.equals(i2.getSpeciality(), speciality)) {
+            if (Objects.equals(i2.getSkill(), speciality)) {
 
                 System.out.println("etape 1");
                 //System.out.println(i.next());

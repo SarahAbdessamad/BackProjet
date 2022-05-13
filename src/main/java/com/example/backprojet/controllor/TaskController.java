@@ -200,14 +200,7 @@ public class TaskController {
     }
 
      */
-    @PutMapping("/updateEtiquette/{id}")
-    public void updateEtiquette(@PathVariable Long id, @RequestBody Task task) {
-        Task task3 = taskRepo.findById(id).orElseThrow(() -> new UsernotFoundException("User by id " + id + "was not found"));
-        task3.setBlocked(task.getBlocked());
-        task3.setUrgent(task.getUrgent());
-        task3.setAlmostDone(task.getAlmostDone());
-        taskRepo.save(task3);
-    }
+
 
 
 }

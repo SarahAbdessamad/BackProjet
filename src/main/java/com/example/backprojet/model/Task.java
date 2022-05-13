@@ -25,10 +25,11 @@ public class Task {
     private String MaxStart;
     private String MaxFinish;
     private String projectId;
+    private int progress;
     private String Status;
-    private String urgent;
-    private String almostDone;
-    private String blocked;
+    private boolean urgent;
+    private boolean blocked;
+    private boolean almostfinished;
 
     @Override
     public String toString() {
@@ -43,12 +44,48 @@ public class Task {
                 ", MaxStart='" + MaxStart + '\'' +
                 ", MaxFinish='" + MaxFinish + '\'' +
                 ", projectId='" + projectId + '\'' +
+                ", progress=" + progress +
                 ", Status='" + Status + '\'' +
-                ", urgent='" + urgent + '\'' +
-                ", almostDone='" + almostDone + '\'' +
-                ", blocked='" + blocked + '\'' +
+                ", urgent=" + urgent +
+                ", blocked=" + blocked +
+                ", almostfinished=" + almostfinished +
                 '}';
     }
+
+    public boolean isAlmostfinished() {
+        return almostfinished;
+    }
+
+    public void setAlmostfinished(boolean almostfinished) {
+        this.almostfinished = almostfinished;
+    }
+
+    public boolean isUrgent() {
+        return urgent;
+    }
+
+    public void setUrgent(boolean urgent) {
+        this.urgent = urgent;
+    }
+
+
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
+    }
+
+    public int getProgress() {
+        return progress;
+    }
+
+    public void setProgress(int progress) {
+        this.progress = progress;
+    }
+
 
     public String getStatus() {
         return Status;
@@ -114,7 +151,7 @@ public class Task {
     private Set<Task> listOfTasks = new HashSet<>();*/
 
 
-    public Task(Long taskId, String title, String description, String requiredSkill, String priority, String startdate, String deadline, String maxStart, String maxFinish, String projectId, String status, String urgent, String almostDone, String blocked) {
+    public Task(Long taskId, String title, String description, String requiredSkill, String priority, String startdate, String deadline, String maxStart, String maxFinish, String projectId) {
         TaskId = taskId;
         this.title = title;
         this.description = description;
@@ -125,10 +162,9 @@ public class Task {
         MaxStart = maxStart;
         MaxFinish = maxFinish;
         this.projectId = projectId;
-        Status = status;
-        this.urgent = urgent;
-        this.almostDone = almostDone;
-        this.blocked = blocked;
+        this.Status = "todo";
+        this.progress= 0;
+
     }
 
     public Task() {
@@ -210,32 +246,7 @@ public class Task {
     public Set<Users> getEnrollUsersToTask() {
         return enrollUsersToTask;
     }
-
-    public String getUrgent() {
-        return urgent;
-    }
-
-    public void setUrgent(String urgent) {
-        this.urgent = urgent;
-    }
-
-    public String getAlmostDone() {
-        return almostDone;
-    }
-
-    public void setAlmostDone(String almostDone) {
-        this.almostDone = almostDone;
-    }
-
-    public String getBlocked() {
-        return blocked;
-    }
-
-    public void setBlocked(String blocked) {
-        this.blocked = blocked;
-    }
-
-    /*
+/*
     public Set<Dependency> getEnrollDependenciesToTask() {
         return enrollDependenciesToTask;
     }
