@@ -1,14 +1,12 @@
 package com.example.backprojet.model;
 
-
-import org.springframework.web.bind.annotation.ModelAttribute;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Story {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "StoryId", nullable = false)
@@ -16,19 +14,32 @@ public class Story {
 
     @Column(length = 2048)
     private String StoryTitle;
+
     @Column(length = 2048)
     private String StoryDescription;
+
     private String StoryStartdate;
     private String StoryDeadline;
     private String StoryStatus;
     private String EpicId;
     private String Priority;
 
-    //@ModelAttribute("requiredSkills")
-    //ArrayList<String> requiredSkills;
+    @OneToMany(mappedBy = "story")
+    private List<Task> tasks;
 
-    @ElementCollection
-    private List<String> requiredSkills;
+    public List<String> getRequiredSkills() {
+        List<String> skills = new ArrayList<>();
+        this.tasks.forEach(task -> skills.add(task.getRequiredSkill()));
+        return skills;
+    }
+
+    public List<Task> getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
 
     public Story() {
     }
@@ -42,7 +53,6 @@ public class Story {
         StoryStatus = storyStatus;
         EpicId = epicId;
         Priority = priority;
-        this.requiredSkills = requiredSkills;
     }
 
     public Long getStoryId() {
@@ -109,14 +119,6 @@ public class Story {
         Priority = priority;
     }
 
-    public List<String> getRequiredSkills() {
-        return requiredSkills;
-    }
-
-    public void setRequiredSkills(List<String> requiredSkills) {
-        this.requiredSkills = requiredSkills;
-    }
-
     @Override
     public String toString() {
         return "Story{" +
@@ -128,7 +130,6 @@ public class Story {
                 ", StoryStatus='" + StoryStatus + '\'' +
                 ", EpicId='" + EpicId + '\'' +
                 ", Priority='" + Priority + '\'' +
-                ", requiredSkills=" + requiredSkills +
                 '}';
     }
 }

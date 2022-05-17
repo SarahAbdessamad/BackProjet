@@ -6,6 +6,7 @@ import com.example.backprojet.exception.UsernotFoundException;
 import com.example.backprojet.model.Story;
 import com.example.backprojet.model.Task;
 import com.example.backprojet.repo.StoryRepo;
+import com.example.backprojet.repo.TaskRepo;
 import com.example.backprojet.service.StoryService;
 import com.example.backprojet.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class StoryController {
     private Story story;
     @Autowired
     private StoryRepo storyRepo;
+    private TaskRepo taskRepo;
+
     @Autowired
     private StoryService storyService;
     private TaskService taskService;
@@ -65,7 +68,6 @@ public class StoryController {
         story1.setStoryStatus(story.getStoryStatus());
         story1.setPriority(story.getPriority());
         story1.setEpicId(story.getEpicId());
-        story1.setRequiredSkills(story.getRequiredSkills());
         Story updatedStory = storyRepo.save(story1);
         return new ResponseEntity<>(updatedStory, HttpStatus.OK);
     }
@@ -80,5 +82,10 @@ public class StoryController {
         return  storyRepo.getStoryByEpic(EpicId);
     }
 
-
+    @PutMapping("/updateStoryStatus/{id}/{status}")
+    public void updateStoryStatus(@PathVariable Long id,@PathVariable String status) {
+        Story story2 = storyRepo.findById(id).orElseThrow(() -> new UsernotFoundException("Story by id " + id + "was not found"));
+        story2.setStoryStatus(status);
+        storyRepo.save(story2);
+    }
 }
