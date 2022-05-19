@@ -24,6 +24,18 @@ public class Project implements Serializable {
 
  */
 
+    @OneToMany(mappedBy = "project")
+    private List<Epic> epics;
+
+
+    public List<Epic> getEpics() {
+        return epics;
+    }
+    public void setEpics(List<Task> tasks) {
+        this.epics = epics;
+    }
+
+
     @Column(length = 2048)
     private String ProjectTitle;
     @Column(length = 2048)

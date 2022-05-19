@@ -2,6 +2,7 @@ package com.example.backprojet.model;
 
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Epic {
@@ -19,7 +20,29 @@ public class Epic {
     private long Effort_Days;
     private String ProjectId;
 
+    @ManyToOne
+    private Project project;
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
+
     public Epic() {
+    }
+
+    @OneToMany(mappedBy = "epic")
+    private List<Story> stories;
+
+
+    public List<Story> getStories() {
+        return stories;
+    }
+    public void setStories(List<Story> stories) {
+        this.stories = stories;
     }
 
 
