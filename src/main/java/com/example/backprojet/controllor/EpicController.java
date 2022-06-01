@@ -3,7 +3,9 @@ package com.example.backprojet.controllor;
 
 import com.example.backprojet.exception.UsernotFoundException;
 import com.example.backprojet.model.Epic;
+import com.example.backprojet.model.Project;
 import com.example.backprojet.repo.EpicRepo;
+import com.example.backprojet.repo.ProjectRepo;
 import com.example.backprojet.service.EpicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +24,8 @@ public class EpicController {
     @Autowired
     private EpicRepo epicRepo;
     @Autowired
+    private ProjectRepo projectRepo;
+    @Autowired
     private  EpicService epicService;
 
     public EpicController(EpicService epicService) {
@@ -31,6 +35,8 @@ public class EpicController {
     @PostMapping("/addepic")
     void addEpic(@RequestBody Epic epic) {
         System.out.println("epic");
+        Project epicProject  = projectRepo.getById(epic.getProjectId());
+        epic.setProject(epicProject);
         epicRepo.save(epic);
     }
 
@@ -64,7 +70,7 @@ public class EpicController {
     }
 
     @RequestMapping("/findepic/{projectId}")
-    public List<Epic> getTaskByProject(@PathVariable String projectId) {
+    public List<Epic> getEpicByProject(@PathVariable String projectId) {
         return  epicRepo.getEpicByProject(projectId);
     }
 

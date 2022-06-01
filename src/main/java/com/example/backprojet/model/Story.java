@@ -1,5 +1,7 @@
 package com.example.backprojet.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +23,13 @@ public class Story {
     private String StoryStartdate;
     private String StoryDeadline;
     private String StoryStatus;
-    private String EpicId;
+
+    //@Transient
+    private long EpicId;
+
     private String Priority;
 
+    @JsonIgnore
     @ManyToOne
     private Epic epic;
 
@@ -35,9 +41,7 @@ public class Story {
         this.epic = epic;
     }
 
-
-
-    @OneToMany(mappedBy = "story")
+    @OneToMany(mappedBy = "story" , cascade = CascadeType.REMOVE)
     private List<Task> tasks;
 
     public List<String> getRequiredSkills() {
@@ -57,7 +61,7 @@ public class Story {
     public Story() {
     }
 
-    public Story(Long storyId, String storyTitle, String storyDescription, String storyStartdate, String storyDeadline, String storyStatus, String epicId, String priority, List<String> requiredSkills) {
+    public Story(Long storyId, String storyTitle, String storyDescription, String storyStartdate, String storyDeadline, String storyStatus, long epicId, String priority) {
         StoryId = storyId;
         StoryTitle = storyTitle;
         StoryDescription = storyDescription;
@@ -116,11 +120,11 @@ public class Story {
         StoryStatus = storyStatus;
     }
 
-    public String getEpicId() {
+    public long getEpicId() {
         return EpicId;
     }
 
-    public void setEpicId(String epicId) {
+    public void setEpicId(long epicId) {
         EpicId = epicId;
     }
 

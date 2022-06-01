@@ -16,6 +16,6 @@ public interface StoryRepo extends JpaRepository<Story, Long>, CrudRepository<St
     @Query("SELECT s FROM Story s WHERE s.StoryTitle LIKE CONCAT('%',:StoryTitle,'%')   ")
     public Iterable<Story> getStoryByStoryTitle(@Param("StoryTitle") String StoryTitle);
 
-    @Query("SELECT s FROM Story s WHERE s.EpicId = :EpicId")
-    List<Story> getStoryByEpic(@Param("EpicId") String EpicId);
+    /*@Query("SELECT s FROM Story s WHERE s.EpicId = :EpicId")
+    List<Story> getStoryByEpic(@Param("EpicId") String EpicId);*/
 }

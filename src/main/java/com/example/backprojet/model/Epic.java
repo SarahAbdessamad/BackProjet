@@ -1,6 +1,9 @@
 package com.example.backprojet.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -18,9 +21,10 @@ public class Epic {
     private String EpicStartdate;
     private String EpicDeadline;
     private long Effort_Days;
-    private String ProjectId;
+    private long ProjectId;
 
     @ManyToOne
+    @JsonIgnore
     private Project project;
 
     public Project getProject() {
@@ -34,13 +38,14 @@ public class Epic {
     public Epic() {
     }
 
-    @OneToMany(mappedBy = "epic")
-    private List<Story> stories;
+    @OneToMany(mappedBy = "epic", cascade = CascadeType.REMOVE)
+    public List<Story> stories;
 
 
-    public List<Story> getStories() {
+    /*public List<Story> getStories() {
         return stories;
-    }
+    }*/
+
     public void setStories(List<Story> stories) {
         this.stories = stories;
     }
@@ -99,22 +104,15 @@ public class Epic {
     }
 
 
-    public String getProjectId() {
+    public long getProjectId() {
         return ProjectId;
     }
 
-    public void setProjectId(String projectId) {
+    public void setProjectId(long projectId) {
         ProjectId = projectId;
     }
 
-    public Epic(Long epicId, String epicTitle, String epicDescription, String projectId) {
-        EpicId = epicId;
-        EpicTitle = epicTitle;
-        EpicDescription = epicDescription;
-        ProjectId = projectId;
-    }
-
-    public Epic(Long epicId, String epicTitle, String epicDescription, String epicStartdate, String epicDeadline, long effort_Days, String projectId) {
+    public Epic(Long epicId, String epicTitle, String epicDescription, String epicStartdate, String epicDeadline, long effort_Days, long projectId) {
         EpicId = epicId;
         EpicTitle = epicTitle;
         EpicDescription = epicDescription;

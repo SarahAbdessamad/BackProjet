@@ -3,8 +3,10 @@ package com.example.backprojet.controllor;
 
 import com.example.backprojet.dto.TaskCreationForm;
 import com.example.backprojet.exception.UsernotFoundException;
+import com.example.backprojet.model.Epic;
 import com.example.backprojet.model.Story;
 import com.example.backprojet.model.Task;
+import com.example.backprojet.repo.EpicRepo;
 import com.example.backprojet.repo.StoryRepo;
 import com.example.backprojet.repo.TaskRepo;
 import com.example.backprojet.service.StoryService;
@@ -24,10 +26,15 @@ public class StoryController {
     private Story story;
     @Autowired
     private StoryRepo storyRepo;
+    @Autowired
     private TaskRepo taskRepo;
 
     @Autowired
+    EpicRepo epicRepo;
+
+    @Autowired
     private StoryService storyService;
+    @Autowired
     private TaskService taskService;
 
     public StoryController(StoryService storyService) {
@@ -37,6 +44,8 @@ public class StoryController {
 
     @PostMapping("/addStory")
     void addStory(@RequestBody Story story) {
+        Epic storyEpic  = epicRepo.getById(story.getEpicId());
+        story.setEpic( storyEpic );
         storyRepo.save(story);
     }
 
@@ -77,10 +86,10 @@ public class StoryController {
         return (List<Story>) storyRepo.getStoryByStoryTitle(StoryTitle);
     }
 
-    @RequestMapping("/findstory/{EpicId}")
+    /*@RequestMapping("/findstory/{EpicId}")
     public List<Story> getStoryByEpic(@PathVariable String EpicId) {
         return  storyRepo.getStoryByEpic(EpicId);
-    }
+    }*/
 
     @PutMapping("/updateStoryStatus/{id}/{status}")
     public void updateStoryStatus(@PathVariable Long id,@PathVariable String status) {

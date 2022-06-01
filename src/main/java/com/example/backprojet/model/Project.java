@@ -24,7 +24,7 @@ public class Project implements Serializable {
 
  */
 
-    @OneToMany(mappedBy = "project")
+    @OneToMany(mappedBy = "project" , cascade = CascadeType.REMOVE)
     private List<Epic> epics;
 
 

@@ -5,18 +5,21 @@ import com.example.backprojet.repo.EpicRepo;
 import com.example.backprojet.repo.StoryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import javax.transaction.Transactional;
 
 @Service
 @Transactional
 public class StoryService {
+
     private StoryRepo storyRepo;
+
     @Autowired
     public StoryService(StoryRepo storyRepo) {
         this.storyRepo = storyRepo;
     }
 
-    public void deleteStory(Long StoryId){
+    public void deleteStory(Long StoryId) {
         storyRepo.deleteById(StoryId);
     }
 
