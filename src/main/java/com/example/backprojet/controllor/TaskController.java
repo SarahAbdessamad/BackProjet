@@ -3,10 +3,8 @@ package com.example.backprojet.controllor;
 
 import com.example.backprojet.dto.TaskCreationForm;
 import com.example.backprojet.exception.UsernotFoundException;
-import com.example.backprojet.model.Project;
-import com.example.backprojet.model.SubTaskMapping;
-import com.example.backprojet.model.Task;
-import com.example.backprojet.model.Users;
+import com.example.backprojet.model.*;
+import com.example.backprojet.repo.StoryRepo;
 import com.example.backprojet.repo.TaskRepo;
 import com.example.backprojet.repo.UsersRepo;
 import com.example.backprojet.service.SubTaskMappingService;
@@ -23,6 +21,7 @@ import java.util.Set;
 @RestController
 @RequestMapping("/task")
 public class TaskController {
+
     private Task task;
     private TaskService taskService;
 
@@ -30,6 +29,8 @@ public class TaskController {
     private TaskRepo taskRepo;
     @Autowired
     private UsersRepo usersRepo;
+    @Autowired
+    private StoryRepo storyRepo;
 
     @Autowired
     SubTaskMappingService subTaskMappingService;
@@ -45,6 +46,8 @@ public class TaskController {
 
     @PostMapping("/addtask")
     Task addTask(@RequestBody TaskCreationForm taskCreationForm) {
+        Story taskstory  = storyRepo.getById(task.getStoryId());
+        task.setStory(taskstory);
         Task newTask = taskRepo.save(taskCreationForm.getNewTask());
         subTaskMappingService.addSubTasks(newTask, taskCreationForm.getSubTasksIdList());
         return newTask;
@@ -115,10 +118,10 @@ public class TaskController {
         return taskRepo.save(task);
     }
 
-    @RequestMapping("/findTask/{projectId}")
-    public List<Task> getTaskByProject(@PathVariable String projectId) {
+    @RequestMapping("/findTask/{StoryId}")
+    public List<Task> getTaskByProject(@PathVariable String StoryId) {
 
-        return (List<Task>) taskRepo.getTaskByProject(projectId);
+        return (List<Task>) taskRepo.getTaskByStory(StoryId);
     }
 
     @GetMapping("/{taskID}/get")
@@ -144,19 +147,17 @@ public class TaskController {
         task1.setDeadline(task.getDeadline());
         task1.setMaxStart(task.getMaxStart());
         task1.setMaxFinish(task.getMaxFinish());
-        task1.setProjectId(task.getProjectId());
+        task1.setStoryId(task.getStoryId());
         task1.setAlmostfinished(task.isAlmostfinished());
         task1.setBlocked(task.isBlocked());
         task1.setUrgent(task.isUrgent());
         task1.setProgress(task.getProgress());
         Task updatedGadget = taskRepo.save(task1);
         return new ResponseEntity<>(updatedGadget, HttpStatus.OK);
-
     }
 
-
     /*
-    @PutMapping("/{taskId}/enroll/{ProjectId}")
+    @PutMapping("/{taskId}/enroll/{storiesId}")
     Task assign(
             @PathVariable  Long userid,
             @PathVariable  Long taskId
@@ -197,9 +198,7 @@ public class TaskController {
     public ResponseEntity<List<Project>> getAllBlocked() {
         List<Task> task = taskRepo.findAll();
         return new ResponseEntity<List<Task>>(task, HttpStatus.OK);
-    }
-
-     */
+    }*/
 
 
 

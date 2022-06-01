@@ -10,7 +10,7 @@ public class SubTaskMapping {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     private Task parentTask;
 
     @ManyToOne

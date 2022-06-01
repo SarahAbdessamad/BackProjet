@@ -2,6 +2,7 @@ package com.example.backprojet.repo;
 
 
 import com.example.backprojet.model.Task;
+import com.example.backprojet.model.Users;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -12,10 +13,11 @@ import java.util.List;
 
 @Repository
 public interface TaskRepo extends JpaRepository<Task, Long>, CrudRepository<Task, Long> {
-    @Query("SELECT u FROM Task u WHERE u.projectId = :projectId")
-    List<Task> getTaskByProject(@Param("projectId") String projectId);
+    @Query("SELECT t FROM Task t WHERE t.StoryId = :StoryId")
+    List<Task> getTaskByStory(@Param("StoryId") String StoryId);
 
-
+    @Query("SELECT t FROM Task t WHERE t.requiredSkill = :requiredSkill and t.TaskId= :TaskId")
+    public Iterable<Task> findByRequiredSkill(@Param("requiredSkill") String requiredSkill);
 
     @Override
     public  Task save(Task task) ;

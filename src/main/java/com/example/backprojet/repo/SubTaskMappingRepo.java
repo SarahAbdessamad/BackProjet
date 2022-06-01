@@ -15,5 +15,6 @@ import java.util.List;
 public interface SubTaskMappingRepo extends JpaRepository<SubTaskMapping, Long> {
 
     List<SubTaskMapping> findAllByParentTask(Task parentTask);
+
 }
 

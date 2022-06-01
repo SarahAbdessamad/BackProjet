@@ -9,6 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import java.util.List;
+import java.util.Optional;
 
 
 @Repository
@@ -28,5 +29,7 @@ public interface UsersRepo extends JpaRepository<Users, Long> {
 
     @Query("SELECT u FROM Users u WHERE u.skill = :skill ")
     public Iterable<Users> findBySkill(@Param("skill") String skill);
+
+    Optional<Users> findByEmailAndPassword(String email, String password);
 
 }

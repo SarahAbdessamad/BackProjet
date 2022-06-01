@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/Users")
@@ -84,5 +85,10 @@ public class UserController {
     @RequestMapping("/findUser/{skill}")
     public List<Users> findBySpeciality(@PathVariable String skill){
         return (List<Users>) usersRepo.findBySkill(skill);
+    }
+
+    @PostMapping("/login")
+    public Optional<Users> login(@RequestBody Users users) {
+        return usersRepo.findByEmailAndPassword(users.getEmail(),users.getPassword());
     }
 }

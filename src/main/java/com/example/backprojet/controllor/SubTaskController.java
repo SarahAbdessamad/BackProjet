@@ -88,12 +88,13 @@ public class SubTaskController {
         // écrasement
 
         Task t = taskRepo.getById(TaskId);
-
-       /*   for( Task subTask : t.getSubTas ks() ){
-              subTaskMappingRepo.delete(subTask);
+/*
+         for( Task subTask : t.getSubTasks() ){
+              subTaskMappingService.deleteSubTask(subTask);
           }
 
-        */
+ */
+
 
     }
 }

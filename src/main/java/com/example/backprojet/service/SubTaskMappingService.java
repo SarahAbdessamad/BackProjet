@@ -18,10 +18,15 @@ public class SubTaskMappingService {
 
     @Autowired
     SubTaskMappingRepo repoSubtask;
-
-
     @Autowired
     SubTaskMappingRepo subTaskMappingRepository;
+/*
+    public void deleteSubTask(SubTaskMapping id){
+        subTaskMappingRepository.delete(id);
+    }
+
+ */
+
 
     public List<Task> getSubTasks(Task task) {
         List<Task> subTasks = new ArrayList<>();

@@ -1,9 +1,6 @@
 package com.example.backprojet.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,12 +21,23 @@ public class Task {
     private String Deadline;
     private String MaxStart;
     private String MaxFinish;
-    private String projectId;
+    private long StoryId;
     private int progress;
     private String Status;
     private boolean urgent;
     private boolean blocked;
     private boolean almostfinished;
+
+    @ManyToOne(cascade =  CascadeType.REMOVE)
+    private Story story;
+
+    public Story getStory() {
+        return story;
+    }
+
+    public void setStory(Story story) {
+        this.story = story;
+    }
 
     @Override
     public String toString() {
@@ -43,7 +51,7 @@ public class Task {
                 ", Deadline='" + Deadline + '\'' +
                 ", MaxStart='" + MaxStart + '\'' +
                 ", MaxFinish='" + MaxFinish + '\'' +
-                ", projectId='" + projectId + '\'' +
+                ", storyId='" + StoryId + '\'' +
                 ", progress=" + progress +
                 ", Status='" + Status + '\'' +
                 ", urgent=" + urgent +
@@ -98,12 +106,12 @@ public class Task {
     @Transient
     private List<Task> subTasks;
 
-    public String getProjectId() {
-        return projectId;
+    public long getStoryId() {
+        return StoryId;
     }
 
-    public void setProjectId(String projectId) {
-        this.projectId = projectId;
+    public void setStoryId(long storyId) {
+        StoryId = storyId;
     }
 
     public List<Task> getSubTasks() {
@@ -134,7 +142,7 @@ public class Task {
 
 /*
     @ManyToOne(cascade=CascadeType.ALL)
-    @JoinColumn(name="ProjectId", referencedColumnName = "TaskId")
+    @JoinColumn(name="StoryId", referencedColumnName = "TaskId")
     private Project project;
 
  */
@@ -151,7 +159,7 @@ public class Task {
     private Set<Task> listOfTasks = new HashSet<>();*/
 
 
-    public Task(Long taskId, String title, String description, String requiredSkill, String priority, String startdate, String deadline, String maxStart, String maxFinish, String projectId) {
+    public Task(Long taskId, String title, String description, String requiredSkill, String priority, String startdate, String deadline, String maxStart, String maxFinish, long storyId, int progress, String status, boolean urgent, boolean blocked, boolean almostfinished) {
         TaskId = taskId;
         this.title = title;
         this.description = description;
@@ -161,10 +169,12 @@ public class Task {
         Deadline = deadline;
         MaxStart = maxStart;
         MaxFinish = maxFinish;
-        this.projectId = projectId;
-        this.Status = "todo";
-        this.progress= 0;
-
+        StoryId = storyId;
+        this.progress = progress;
+        Status = status;
+        this.urgent = urgent;
+        this.blocked = blocked;
+        this.almostfinished = almostfinished;
     }
 
     public Task() {
