@@ -41,7 +41,7 @@ public class Story {
         this.epic = epic;
     }
 
-    @OneToMany(mappedBy = "story" , cascade = CascadeType.REMOVE)
+     @OneToMany(mappedBy = "story" , cascade = CascadeType.REMOVE)
     private List<Task> tasks;
 
     public List<String> getRequiredSkills() {

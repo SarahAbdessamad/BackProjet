@@ -1,4 +1,4 @@
-package com.example.backprojet.repo;
+package com.example.backprojet.service.repo;
 
 import com.example.backprojet.model.Epic;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,6 +17,6 @@ public interface EpicRepo  extends JpaRepository<Epic, Long>, CrudRepository<Epi
 
 
     @Query("SELECT e FROM Epic e WHERE e.ProjectId = :ProjectId")
-    List<Epic> getEpicByProject(@Param("ProjectId") String ProjectId);
+    List<Epic> getEpicByProject(@Param("ProjectId") Long ProjectId);
 
 }

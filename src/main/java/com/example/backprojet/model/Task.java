@@ -1,5 +1,7 @@
 package com.example.backprojet.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.List;
@@ -28,6 +30,7 @@ public class Task {
     private boolean blocked;
     private boolean almostfinished;
 
+    @JsonIgnore
     @ManyToOne(cascade =  CascadeType.REMOVE)
     private Story story;
 
@@ -76,8 +79,6 @@ public class Task {
         this.urgent = urgent;
     }
 
-
-
     public boolean isBlocked() {
         return blocked;
     }
@@ -103,8 +104,7 @@ public class Task {
         Status = status;
     }
 
-    @Transient
-    private List<Task> subTasks;
+
 
     public long getStoryId() {
         return StoryId;
@@ -114,13 +114,6 @@ public class Task {
         StoryId = storyId;
     }
 
-    public List<Task> getSubTasks() {
-        return subTasks;
-    }
-
-    public void setSubTasks(List<Task> subTasks) {
-        this.subTasks = subTasks;
-    }
 
     @ManyToMany
     @JoinTable(

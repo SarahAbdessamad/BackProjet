@@ -2,14 +2,14 @@ package com.example.backprojet.controllor;
 
 import com.example.backprojet.exception.UsernotFoundException;
 import com.example.backprojet.model.Project;
-import com.example.backprojet.model.Task;
 import com.example.backprojet.model.Users;
-import com.example.backprojet.repo.ProjectRepo;
-import com.example.backprojet.repo.UsersRepo;
+import com.example.backprojet.service.repo.ProjectRepo;
+import com.example.backprojet.service.repo.UsersRepo;
 import com.example.backprojet.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
@@ -29,17 +29,18 @@ public class ProjectController {
         this.projectService = projectService;
     }
 
+    @PreAuthorize("hasRole('ProjectManager')")
     @PostMapping("/addproject")
     void addProject(@RequestBody Project project) {
         projectRepo.save(project);
 
     }
-
     @RequestMapping("/find/{id}")
     public Optional<Project> getProjectById(@PathVariable(value = "id") Long ProjectId) {
         return projectRepo.findById(ProjectId);
     }
 
+    @PreAuthorize("hasRole('ProjectManager')")
     @GetMapping("/all")
     public ResponseEntity<List<Project>> getAllProject() {
         List<Project> project = projectRepo.findAll();
@@ -113,7 +114,7 @@ public class ProjectController {
     }
 
     @PutMapping("/{pprojectId}/enroll/{userid}")
-    Project getUsersByProject(
+    Project enrollUserToProject(
             @PathVariable Long userid,
             @PathVariable Long pprojectId
     ) {

@@ -4,8 +4,8 @@ package com.example.backprojet.controllor;
 import com.example.backprojet.exception.UsernotFoundException;
 import com.example.backprojet.model.Epic;
 import com.example.backprojet.model.Project;
-import com.example.backprojet.repo.EpicRepo;
-import com.example.backprojet.repo.ProjectRepo;
+import com.example.backprojet.service.repo.EpicRepo;
+import com.example.backprojet.service.repo.ProjectRepo;
 import com.example.backprojet.service.EpicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,6 +51,7 @@ public class EpicController {
         return new ResponseEntity<>(epic, HttpStatus.OK);
     }
 
+
     @DeleteMapping("/delete/{EpicId}")
     public ResponseEntity<?> deleteEpic(@PathVariable("EpicId") Long EpicId) {
         epicService.deleteEpic(EpicId);
@@ -64,13 +65,14 @@ public class EpicController {
         epic1.setEpicDescription(epic.getEpicDescription());
         epic1.setEpicStartdate(epic.getEpicStartdate());
         epic1.setEpicDeadline(epic.getEpicDeadline());
+        epic1.setColor(epic.getColor());
         epic1.setEffort_Days(epic.getEffort_Days());
         Epic updatedEpic = epicRepo.save(epic1);
         return new ResponseEntity<>(updatedEpic, HttpStatus.OK);
     }
 
     @RequestMapping("/findepic/{projectId}")
-    public List<Epic> getEpicByProject(@PathVariable String projectId) {
+    public List<Epic> getEpicByProject(@PathVariable Long projectId) {
         return  epicRepo.getEpicByProject(projectId);
     }
 

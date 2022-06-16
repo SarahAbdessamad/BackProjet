@@ -1,13 +1,11 @@
 package com.example.backprojet.controllor;
 
 
-import com.example.backprojet.dto.TaskCreationForm;
 import com.example.backprojet.exception.UsernotFoundException;
 import com.example.backprojet.model.*;
-import com.example.backprojet.repo.StoryRepo;
-import com.example.backprojet.repo.TaskRepo;
-import com.example.backprojet.repo.UsersRepo;
-import com.example.backprojet.service.SubTaskMappingService;
+import com.example.backprojet.service.repo.StoryRepo;
+import com.example.backprojet.service.repo.TaskRepo;
+import com.example.backprojet.service.repo.UsersRepo;
 import com.example.backprojet.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,8 +30,6 @@ public class TaskController {
     @Autowired
     private StoryRepo storyRepo;
 
-    @Autowired
-    SubTaskMappingService subTaskMappingService;
 
     public TaskController(TaskService taskService) {
         this.taskService = taskService;
@@ -45,35 +41,26 @@ public class TaskController {
     }*/
 
     @PostMapping("/addtask")
-    Task addTask(@RequestBody TaskCreationForm taskCreationForm) {
-        Story taskstory  = storyRepo.getById(task.getStoryId());
-        task.setStory(taskstory);
-        Task newTask = taskRepo.save(taskCreationForm.getNewTask());
-        subTaskMappingService.addSubTasks(newTask, taskCreationForm.getSubTasksIdList());
-        return newTask;
+    Task addTask(@RequestBody Task task) {
+        Story Taskstory  = storyRepo.getById(task.getStoryId());
+        task.setStory( Taskstory );
+       return  taskRepo.save(task);
     }
 
     @RequestMapping("/find/{id}")
-    public ResponseEntity<?> getTaskById(@PathVariable(value = "id") Long TaskId) {
-        Task task = null;
-        if (taskRepo.findById(TaskId).isPresent()) {
-            task = taskRepo.findById(TaskId).get();
-            task.setSubTasks(subTaskMappingService.getSubTasks(task));
-        }
-        return new ResponseEntity<>(task, HttpStatus.OK);
+    public Optional<Task> getTaskById(@PathVariable(value = "id") Long TaskId) {
+
+        return taskRepo.findById(TaskId);
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<Task>> getAllTask() {
         List<Task> task = taskRepo.findAll();
-        task.forEach(t -> {
-            t.setSubTasks(subTaskMappingService.getSubTasks(t));
-        });
-        return new ResponseEntity<List<Task>>(task, HttpStatus.OK);
+        return new ResponseEntity<>(task, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{TaskId}")
-    public ResponseEntity<?> deleteProject(@PathVariable("TaskId") Long id) {
+    public ResponseEntity<?> deletetask(@PathVariable("TaskId") Long id) {
         taskService.deleteTask(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -137,7 +124,7 @@ public class TaskController {
     }
 
     @PutMapping("/updateByID/{id}")
-    public ResponseEntity<Task> updateGadgetbyId(@PathVariable Long id, @RequestBody Task task) {
+    public ResponseEntity<Task> updatetaskbyId(@PathVariable Long id, @RequestBody Task task) {
         Task task1 = taskRepo.findById(id).orElseThrow(() -> new UsernotFoundException("User by id " + id + "was not found"));
         task1.setTitle(task.getTitle());
         task1.setDescription(task.getDescription());

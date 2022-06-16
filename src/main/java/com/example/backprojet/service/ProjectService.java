@@ -1,12 +1,10 @@
 package com.example.backprojet.service;
 
-import com.example.backprojet.model.Project;
-import com.example.backprojet.repo.ProjectRepo;
+import com.example.backprojet.service.repo.ProjectRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.UUID;
 
 @Service
 @Transactional

@@ -1,14 +1,12 @@
 package com.example.backprojet.controllor;
 
 
-import com.example.backprojet.dto.TaskCreationForm;
 import com.example.backprojet.exception.UsernotFoundException;
 import com.example.backprojet.model.Epic;
 import com.example.backprojet.model.Story;
-import com.example.backprojet.model.Task;
-import com.example.backprojet.repo.EpicRepo;
-import com.example.backprojet.repo.StoryRepo;
-import com.example.backprojet.repo.TaskRepo;
+import com.example.backprojet.service.repo.EpicRepo;
+import com.example.backprojet.service.repo.StoryRepo;
+import com.example.backprojet.service.repo.TaskRepo;
 import com.example.backprojet.service.StoryService;
 import com.example.backprojet.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -86,10 +84,10 @@ public class StoryController {
         return (List<Story>) storyRepo.getStoryByStoryTitle(StoryTitle);
     }
 
-    /*@RequestMapping("/findstory/{EpicId}")
-    public List<Story> getStoryByEpic(@PathVariable String EpicId) {
+    @RequestMapping("/findstory/{EpicId}")
+    public List<Story> getStoryByEpic(@PathVariable Long EpicId) {
         return  storyRepo.getStoryByEpic(EpicId);
-    }*/
+    }
 
     @PutMapping("/updateStoryStatus/{id}/{status}")
     public void updateStoryStatus(@PathVariable Long id,@PathVariable String status) {

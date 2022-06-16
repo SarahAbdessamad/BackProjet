@@ -1,19 +1,60 @@
 package com.example.backprojet.controllor;
 
 
+import com.example.backprojet.model.User;
 import com.example.backprojet.model.Users;
-import com.example.backprojet.repo.UsersRepo;
+import com.example.backprojet.service.repo.UsersRepo;
+import com.example.backprojet.service.UserService;
 import com.example.backprojet.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/Users")
 public class UserController {
+
+
+
+    @Autowired
+    private UserService userService;
+
+    @PostConstruct
+    public void initRoleAndUser() {
+        userService.initRoleAndUser();
+    }
+
+    @PostMapping({"/registerNewUser/{RoleName}"})
+    public User registerNewUser(@RequestBody User user,@PathVariable String RoleName) {
+        return userService.registerNewUser(user,RoleName);
+    }
+
+    @GetMapping({"/forAdmin"})
+    @PreAuthorize("hasRole('Admin')")
+    public String forAdmin(){
+        return "This URL is only accessible to the admin";
+    }
+
+    @GetMapping({"/forUser"})
+    @PreAuthorize("hasRole('User')")
+    public String forUser(){
+        return "This URL is only accessible to the user";
+    }
+
+
+
+    // li fet tebe3 securitty jwt project
+
 
     @Autowired
     UsersRepo usersRepo;
@@ -22,6 +63,11 @@ public class UserController {
     public UserController(UsersService usersService) {
         this.usersService = usersService;
     }
+
+
+
+
+
 
     @PostMapping("/addusers")
     void addUser(@RequestBody Users users) {

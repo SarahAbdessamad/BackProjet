@@ -2,7 +2,6 @@ package com.example.backprojet.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -22,6 +21,15 @@ public class Epic {
     private String EpicDeadline;
     private long Effort_Days;
     private long ProjectId;
+    private String color;
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 
     @ManyToOne
     @JsonIgnore
@@ -131,7 +139,9 @@ public class Epic {
                 ", EpicStartdate='" + EpicStartdate + '\'' +
                 ", EpicDeadline='" + EpicDeadline + '\'' +
                 ", Effort_Days=" + Effort_Days +
-                ", ProjectId='" + ProjectId + '\'' +
+                ", ProjectId=" + ProjectId +
+                ", color='" + color + '\'' +
+                ", project=" + project +
                 '}';
     }
 }

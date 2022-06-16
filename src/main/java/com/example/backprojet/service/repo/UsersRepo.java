@@ -1,4 +1,4 @@
-package com.example.backprojet.repo;
+package com.example.backprojet.service.repo;
 
 import com.example.backprojet.model.Project;
 import com.example.backprojet.model.Users;

@@ -1,4 +1,4 @@
-package com.example.backprojet.repo;
+package com.example.backprojet.service.repo;
 
 
 import com.example.backprojet.model.Task;
