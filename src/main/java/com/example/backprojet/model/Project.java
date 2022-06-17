@@ -27,6 +27,9 @@ public class Project implements Serializable {
     @OneToMany(mappedBy = "project" , cascade = CascadeType.REMOVE)
     private List<Epic> epics;
 
+    @ManyToOne
+    @JsonIgnore
+    private Users user;
 
     public List<Epic> getEpics() {
         return epics;

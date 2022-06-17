@@ -21,6 +21,9 @@ public class Users implements Serializable {
     private int experience;
     private String post;
     private String skill;
+    @ManyToOne
+    @JoinColumn(name = "project_project_id")
+    private Project project;
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "USER_ROLE",
             joinColumns = {
@@ -31,6 +34,9 @@ public class Users implements Serializable {
             }
     )
     private Set<Role> role;
+
+    @OneToMany(mappedBy = "user" , cascade = CascadeType.REMOVE)
+    private List<Project> projects;
 
     public String getUserName() {
         return userName;
@@ -117,9 +123,14 @@ public class Users implements Serializable {
     @ManyToMany(mappedBy = "enrollUsersToTask")
     private Set<Task> listTasks = new HashSet<>();
 
+    public Project getProject() {
+        return project;
+    }
+
     public Users() {
 
     }
+
 
 
     public Users(String userName, String userFirstName, String userLastName, String userPassword, String departement, int experience, String post, String skill) {

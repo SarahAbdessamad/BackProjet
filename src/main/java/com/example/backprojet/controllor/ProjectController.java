@@ -40,7 +40,7 @@ public class ProjectController {
         return projectRepo.findById(ProjectId);
     }
 
-    @PreAuthorize("hasRole('ProjectManager')")
+    @PreAuthorize("hasRole('ProjectDirector')")
     @GetMapping("/all")
     public ResponseEntity<List<Project>> getAllProject() {
         List<Project> project = projectRepo.findAll();
@@ -129,6 +129,21 @@ public class ProjectController {
         System.out.println(project);
         return projectRepo.save(project);
     }
+
+    @PutMapping("{projectId}/setManager/{username}")
+            Project setManager(
+            @PathVariable Long projectId,
+            @PathVariable String username
+
+    ){
+        Project project = projectRepo.findById(projectId).get();
+        System.out.println(project);
+        List<Users> users  =  usersRepo.getUserByname(username);
+        Users user = users.get(0);
+        project.setProjectManager(username);
+        return projectRepo.save(project);
+            }
+
 
     @GetMapping("/{pprojectId}/get")
     List<Users> GetParticipants(

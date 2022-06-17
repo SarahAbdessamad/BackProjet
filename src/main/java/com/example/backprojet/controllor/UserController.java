@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/User")
@@ -118,6 +121,31 @@ public class UserController {
     @RequestMapping("/findUser/{skill}")
     public List<Users> findBySpeciality(@PathVariable String skill){
         return (List<Users>) userRepo.findBySkill(skill);
+    }
+
+    @RequestMapping("/findUserRole/{userRole}")
+    public List<Users> findByRole(@PathVariable String userRole){
+
+        List<Users> users = userRepo.findAll();
+        List<Users> filtred_users = new ArrayList<>();
+        Iterator<Users> i = users.iterator();
+        System.out.println("etape 0");
+        System.out.println(filtred_users);
+
+
+        while (i.hasNext()) {
+            Users i2 = i.next();
+            System.out.println("i2 role = " + i2.getRole().iterator().next().getRoleName());
+            if (Objects.equals( i2.getRole().iterator().next().getRoleName(), userRole)) {
+
+                System.out.println("etape 1");
+                //System.out.println(i.next());
+                System.out.println(i2);
+                filtred_users.add(i2);
+            }
+        }
+
+        return filtred_users;
     }
 
 
