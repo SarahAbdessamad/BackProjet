@@ -1,6 +1,6 @@
 package com.example.backprojet.service;
 
-import com.example.backprojet.service.repo.ProjectRepo;
+import com.example.backprojet.repo.ProjectRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

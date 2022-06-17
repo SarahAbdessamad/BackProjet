@@ -2,19 +2,19 @@ package com.example.backprojet.model;
 
 public class JwtResponse {
 
-    private User user;
+    private Users user;
     private String jwtToken;
 
-    public JwtResponse(User user, String jwtToken) {
+    public JwtResponse(Users user, String jwtToken) {
         this.user = user;
         this.jwtToken = jwtToken;
     }
 
-    public User getUser() {
+    public Users getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(Users user) {
         this.user = user;
     }
 

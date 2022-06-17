@@ -2,7 +2,7 @@ package com.example.backprojet.service;
 
 
 import com.example.backprojet.model.Task;
-import com.example.backprojet.service.repo.TaskRepo;
+import com.example.backprojet.repo.TaskRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

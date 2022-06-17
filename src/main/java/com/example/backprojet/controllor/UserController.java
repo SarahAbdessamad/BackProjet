@@ -1,9 +1,8 @@
 package com.example.backprojet.controllor;
 
 
-import com.example.backprojet.model.User;
 import com.example.backprojet.model.Users;
-import com.example.backprojet.service.repo.UsersRepo;
+import com.example.backprojet.repo.UsersRepo;
 import com.example.backprojet.service.UserService;
 import com.example.backprojet.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
-@RequestMapping("/Users")
+@RequestMapping("/User")
 public class UserController {
 
 
@@ -35,7 +33,7 @@ public class UserController {
     }
 
     @PostMapping({"/registerNewUser/{RoleName}"})
-    public User registerNewUser(@RequestBody User user,@PathVariable String RoleName) {
+    public Users registerNewUser(@RequestBody Users user,@PathVariable String RoleName) {
         return userService.registerNewUser(user,RoleName);
     }
 
@@ -51,13 +49,10 @@ public class UserController {
         return "This URL is only accessible to the user";
     }
 
-
-
     // li fet tebe3 securitty jwt project
 
-
     @Autowired
-    UsersRepo usersRepo;
+    UsersRepo userRepo;
     private UsersService usersService;
 
     public UserController(UsersService usersService) {
@@ -65,14 +60,6 @@ public class UserController {
     }
 
 
-
-
-
-
-    @PostMapping("/addusers")
-    void addUser(@RequestBody Users users) {
-        usersRepo.save(users);
-    }
 
     /*
         @GetMapping("/all")
@@ -83,7 +70,7 @@ public class UserController {
      */
     @GetMapping("/all")
     public ResponseEntity<List<Users>> getAllUSERS() {
-        List<Users> users = usersRepo.findAll();
+        List<Users> users = (List<Users>) userRepo.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 /*
@@ -107,11 +94,11 @@ public class UserController {
 
     @RequestMapping("/find/{nom}")
     public List<Users> getUserByname(@PathVariable String nom) {
-        return (List<Users>) usersRepo.getUserByname(nom);
+        return (List<Users>) userRepo.getUserByname(nom);
     }
     @RequestMapping("/findaaaaaaaaa/{nom}")
     public List<Users> getUserBynamdde(@PathVariable String nom) {
-        return (List<Users>) usersRepo.getUserByname(nom);
+        return (List<Users>) userRepo.getUserByname(nom);
     }
 
 /*
@@ -125,16 +112,13 @@ public class UserController {
  */
     @GetMapping("/findUserExp")
     public List<Users> findByExperience(){
-        return (List<Users>) usersRepo.findByExperience();
+        return (List<Users>) userRepo.findByExperience();
 
 }
     @RequestMapping("/findUser/{skill}")
     public List<Users> findBySpeciality(@PathVariable String skill){
-        return (List<Users>) usersRepo.findBySkill(skill);
+        return (List<Users>) userRepo.findBySkill(skill);
     }
 
-    @PostMapping("/login")
-    public Optional<Users> login(@RequestBody Users users) {
-        return usersRepo.findByEmailAndPassword(users.getEmail(),users.getPassword());
-    }
+
 }

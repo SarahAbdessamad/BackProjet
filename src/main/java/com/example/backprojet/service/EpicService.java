@@ -1,7 +1,7 @@
 package com.example.backprojet.service;
 
 
-import com.example.backprojet.service.repo.EpicRepo;
+import com.example.backprojet.repo.EpicRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

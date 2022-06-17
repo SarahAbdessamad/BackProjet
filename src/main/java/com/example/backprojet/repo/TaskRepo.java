@@ -1,4 +1,4 @@
-package com.example.backprojet.service.repo;
+package com.example.backprojet.repo;
 
 
 import com.example.backprojet.model.Task;
@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface TaskRepo extends JpaRepository<Task, Long>, CrudRepository<Task, Long> {
     @Query("SELECT t FROM Task t WHERE t.StoryId = :StoryId")
-    List<Task> getTaskByStory(@Param("StoryId") String StoryId);
+    List<Task> getTaskByStory(@Param("StoryId") Long StoryId);
 
     @Query("SELECT t FROM Task t WHERE t.requiredSkill = :requiredSkill and t.TaskId= :TaskId")
     public Iterable<Task> findByRequiredSkill(@Param("requiredSkill") String requiredSkill);

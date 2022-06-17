@@ -48,6 +48,7 @@ public class Project implements Serializable {
     private long Effort_Days;
     private boolean Favorite;
     private String Client;
+    private String ProjectManager;
 
     public boolean isFavorite() {
         return Favorite;
@@ -74,6 +75,17 @@ public class Project implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "id")
     )
     private List<Users> enrolledusers = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "USER_ROLE",
+            joinColumns = {
+                    @JoinColumn(name = "USER_ID")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "ROLE_ID")
+            }
+    )
+    private Set<Role> role;
 
 
     public Project(Long projectId, String projectTitle, String projectDescription, String projectDepartement, String projectStartdate, String projectDeadline, String projectStatus, String projectLocation, long effort_Days, boolean favorite, String client) {
@@ -191,7 +203,16 @@ public class Project implements Serializable {
                 ", Effort_Days=" + Effort_Days +
                 ", Favorite=" + Favorite +
                 ", Client='" + Client + '\'' +
+                ", ProjectManager='" + ProjectManager + '\'' +
                 '}';
+    }
+
+    public String getProjectManager() {
+        return ProjectManager;
+    }
+
+    public void setProjectManager(String projectManager) {
+        ProjectManager = projectManager;
     }
 
     public void enrollUsers(Users user) {

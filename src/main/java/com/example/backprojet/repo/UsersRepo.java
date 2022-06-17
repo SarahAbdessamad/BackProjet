@@ -1,4 +1,4 @@
-package com.example.backprojet.service.repo;
+package com.example.backprojet.repo;
 
 import com.example.backprojet.model.Project;
 import com.example.backprojet.model.Users;
@@ -21,7 +21,7 @@ public interface UsersRepo extends JpaRepository<Users, Long> {
 }
  */
 public interface UsersRepo extends JpaRepository<Users, Long> {
-    @Query("SELECT u FROM Users u WHERE u.nom = :nom")
+    @Query("SELECT u FROM Users u WHERE u.userName = :nom")
     List<Users> getUserByname(@Param("nom") String nom);
 
     @Query("SELECT u FROM Users u ORDER BY u.experience DESC")
@@ -30,6 +30,6 @@ public interface UsersRepo extends JpaRepository<Users, Long> {
     @Query("SELECT u FROM Users u WHERE u.skill = :skill ")
     public Iterable<Users> findBySkill(@Param("skill") String skill);
 
-    Optional<Users> findByEmailAndPassword(String email, String password);
+   // Optional<Users> findByEmailAndPassword(String email, String password);
 
 }

@@ -1,8 +1,9 @@
 package com.example.backprojet.service;
 import com.example.backprojet.model.Role;
-import com.example.backprojet.model.User;
-import com.example.backprojet.service.repo.RoleDao;
-import com.example.backprojet.service.repo.UserDao;
+import com.example.backprojet.model.Users;
+import com.example.backprojet.repo.RoleDao;
+import com.example.backprojet.repo.UserDao;
+import com.example.backprojet.repo.UsersRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.util.Set;
 public class UserService {
 
     @Autowired
-    private UserDao userDao;
+    private UsersRepo userDao;
 
     @Autowired
     private RoleDao roleDao;
@@ -44,7 +45,7 @@ public class UserService {
         ProjectDirectorRole.setRoleDescription("role for ProjectDirectorRole");
         roleDao.save(ProjectDirectorRole);
 
-        User adminUser = new User();
+        Users adminUser = new Users();
         adminUser.setUserName("admin123");
         adminUser.setUserPassword( getEncodedPassword("admin@pass")) ;
         adminUser.setUserFirstName("admin");
@@ -54,7 +55,7 @@ public class UserService {
         adminUser.setRole(adminRoles);
         userDao.save(adminUser);
 
-        User Manager = new User();
+        Users Manager = new Users();
         Manager.setUserName("abdou");
         Manager.setUserPassword( getEncodedPassword("abdou@pass")) ;
         Manager.setUserFirstName("abdou");
@@ -81,7 +82,7 @@ public class UserService {
 //        userDao.save(user);
     }
 
-    public User registerNewUser(User user,String RoleName) {
+    public Users registerNewUser(Users user, String RoleName) {
         Role role = roleDao.findById(RoleName).get();
         Set<Role> userRoles = new HashSet<>();
         userRoles.add(role);

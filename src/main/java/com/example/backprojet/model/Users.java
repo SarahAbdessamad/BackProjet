@@ -11,64 +11,67 @@ import java.util.Set;
 
 @Entity
 public class Users implements Serializable {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-
-    private Long id;
-    private String nom;
-    private String prenom;
+    private String userName;
+    private String userFirstName;
+    private String userLastName;
+    private String userPassword;
+    private String departement;
+    private int experience;
+    private String post;
     private String skill;
-    private String Role;
-    private String email;
-    private String password;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "USER_ROLE",
+            joinColumns = {
+                    @JoinColumn(name = "USER_ID")
+            },
+            inverseJoinColumns = {
+                    @JoinColumn(name = "ROLE_ID")
+            }
+    )
+    private Set<Role> role;
 
-    public String getPrenom() {
-        return prenom;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setPrenom(String prenom) {
-        this.prenom = prenom;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public String getRole() {
-        return Role;
+    public String getUserFirstName() {
+        return userFirstName;
     }
 
-    public void setRole(String role) {
-        Role = role;
+    public void setUserFirstName(String userFirstName) {
+        this.userFirstName = userFirstName;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUserLastName() {
+        return userLastName;
     }
 
-    public void setEmail(String email) {
-        email = email;
+    public void setUserLastName(String userLastName) {
+        this.userLastName = userLastName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 
-    @Override
-    public String toString() {
-        return "Users{" +
-                "id=" + id +
-                ", nom='" + nom + '\'' +
-                ", prenom='" + prenom + '\'' +
-                ", skill='" + skill + '\'' +
-                ", Role='" + Role + '\'' +
-                ", Email='" + email + '\'' +
-                ", password='" + password + '\'' +
-                ", departement='" + departement + '\'' +
-                ", experience=" + experience +
-                ", post='" + post + '\'' +
-                '}';
+    public Set<Role> getRole() {
+        return role;
     }
+
+    public void setRole(Set<Role> role) {
+        this.role = role;
+    }
+
 
     public String getSkill() {
         return skill;
@@ -78,9 +81,7 @@ public class Users implements Serializable {
         this.skill = skill;
     }
 
-    private String departement;
-    private int experience;
-    private String post;
+
 
     public String getPost() {
         return post;
@@ -117,40 +118,41 @@ public class Users implements Serializable {
     private Set<Task> listTasks = new HashSet<>();
 
     public Users() {
-        this.id = Long.valueOf(0);
-        this.nom = "";
-        this.prenom = "";
+
     }
 
-    public Users(Long id, String nom, String prenom, String skill, String role, String email, String password, String departement, int experience, String post) {
-        this.id = id;
-        this.nom = nom;
-        this.prenom = prenom;
-        this.skill = skill;
-        Role = role;
-        email = email;
-        this.password = password;
+
+    public Users(String userName, String userFirstName, String userLastName, String userPassword, String departement, int experience, String post, String skill) {
+        this.userName = userName;
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
+        this.userPassword = userPassword;
         this.departement = departement;
         this.experience = experience;
         this.post = post;
+        this.skill = skill;
     }
 
-    public Long getId() {
-        return id;
+    public Users(String userName, String userFirstName, String userLastName, String userPassword) {
+        this.userName = userName;
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
+        this.userPassword = userPassword;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    @Override
+    public String toString() {
+        return "Users{" +
+                "userName='" + userName + '\'' +
+                ", userFirstName='" + userFirstName + '\'' +
+                ", userLastName='" + userLastName + '\'' +
+                ", userPassword='" + userPassword + '\'' +
+                ", departement='" + departement + '\'' +
+                ", experience=" + experience +
+                ", post='" + post + '\'' +
+                ", skill='" + skill + '\'' +
+                '}';
     }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
 
     public Set<Project> getListprojects() {
         return listprojects;

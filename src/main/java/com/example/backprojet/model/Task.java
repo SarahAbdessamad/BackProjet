@@ -30,8 +30,11 @@ public class Task {
     private boolean blocked;
     private boolean almostfinished;
 
+
+
+
     @JsonIgnore
-    @ManyToOne(cascade =  CascadeType.REMOVE)
+    @ManyToOne
     private Story story;
 
     public Story getStory() {

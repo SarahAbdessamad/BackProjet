@@ -2,8 +2,8 @@ package com.example.backprojet.service;
 
 import com.example.backprojet.model.JwtRequest;
 import com.example.backprojet.model.JwtResponse;
-import com.example.backprojet.model.User;
-import com.example.backprojet.service.repo.UserDao;
+import com.example.backprojet.model.Users;
+import com.example.backprojet.repo.UserDao;
 import com.example.backprojet.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -39,13 +39,13 @@ public class JwtService implements UserDetailsService {
         UserDetails userDetails = loadUserByUsername(userName);
         String newGeneratedToken = jwtUtil.generateToken(userDetails);
 
-        User user = userDao.findById(userName).get();
+        Users user = userDao.findById(userName).get();
         return new JwtResponse(user, newGeneratedToken);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDao.findById(username).get();
+        Users user = userDao.findById(username).get();
 
         if (user != null) {
             return new org.springframework.security.core.userdetails.User(
@@ -58,7 +58,7 @@ public class JwtService implements UserDetailsService {
         }
     }
 
-    private Set getAuthority(User user) {
+    private Set getAuthority(Users user) {
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
         user.getRole().forEach(role -> {
             authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName()));

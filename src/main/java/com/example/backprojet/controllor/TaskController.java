@@ -3,9 +3,9 @@ package com.example.backprojet.controllor;
 
 import com.example.backprojet.exception.UsernotFoundException;
 import com.example.backprojet.model.*;
-import com.example.backprojet.service.repo.StoryRepo;
-import com.example.backprojet.service.repo.TaskRepo;
-import com.example.backprojet.service.repo.UsersRepo;
+import com.example.backprojet.repo.StoryRepo;
+import com.example.backprojet.repo.TaskRepo;
+import com.example.backprojet.repo.UsersRepo;
 import com.example.backprojet.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -67,12 +67,13 @@ public class TaskController {
 
     @PutMapping("/{taskId}/enroll/{userid}")
     Task enrollUsersToTask(
-            @PathVariable Long userid,
+            @PathVariable String userid,
             @PathVariable Long taskId
     ) {
         Task task = taskRepo.findById(taskId).get();
         System.out.println(task);
-        Users user = usersRepo.findById(userid).get();
+        List<Users> users  =  usersRepo.getUserByname(userid);
+        Users user = users.get(0);
         System.out.println(user);
         task.enrollUsersToTask(user);
         System.out.println(task);
@@ -82,12 +83,13 @@ public class TaskController {
 
     @PutMapping("/{taskId}/delete/{userid}")
     Task deleteUsersFromTask(
-            @PathVariable Long userid,
+            @PathVariable String userid,
             @PathVariable Long taskId
     ) {
         Task task = taskRepo.findById(taskId).get();
         System.out.println(task);
-        Users user = usersRepo.findById(userid).get();
+        List<Users> users  =  usersRepo.getUserByname(userid);
+        Users user = users.get(0);
         System.out.println(user);
         task.deleteUsersFromTask(user);
         System.out.println(task);
@@ -106,7 +108,7 @@ public class TaskController {
     }
 
     @RequestMapping("/findTask/{StoryId}")
-    public List<Task> getTaskByProject(@PathVariable String StoryId) {
+    public List<Task> getTaskByProject(@PathVariable Long StoryId) {
 
         return (List<Task>) taskRepo.getTaskByStory(StoryId);
     }

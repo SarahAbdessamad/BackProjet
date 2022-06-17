@@ -1,4 +1,4 @@
-package com.example.backprojet.service.repo;
+package com.example.backprojet.repo;
 
 
 import com.example.backprojet.model.Epic;

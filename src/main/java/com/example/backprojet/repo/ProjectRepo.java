@@ -1,4 +1,4 @@
-package com.example.backprojet.service.repo;
+package com.example.backprojet.repo;
 
 import com.example.backprojet.model.Project;
 import com.example.backprojet.model.Users;
@@ -15,6 +15,9 @@ public interface ProjectRepo extends JpaRepository<Project, Long>, CrudRepositor
 
     @Query("SELECT p FROM Project p WHERE p.ProjectTitle LIKE CONCAT('%',:ProjectTitle,'%')   ")
     public Iterable<Project> getProjectByProjectTitle(@Param("ProjectTitle") String ProjectTitle);
+
+    @Query("SELECT p FROM Project p WHERE p.ProjectManager LIKE CONCAT('%',:ProjectManager,'%')   ")
+    public Iterable<Project> getProjectByProjectManager(@Param("ProjectManager") String ProjectManager);
 
     @Query("SELECT p FROM Project p WHERE p.ProjectLocation LIKE CONCAT('%',:ProjectLocation,'%')   ")
     public Iterable<Project> getProjectByProjectLocation(@Param("ProjectLocation") String ProjectLocation);

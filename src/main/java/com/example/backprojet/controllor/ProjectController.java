@@ -3,8 +3,8 @@ package com.example.backprojet.controllor;
 import com.example.backprojet.exception.UsernotFoundException;
 import com.example.backprojet.model.Project;
 import com.example.backprojet.model.Users;
-import com.example.backprojet.service.repo.ProjectRepo;
-import com.example.backprojet.service.repo.UsersRepo;
+import com.example.backprojet.repo.ProjectRepo;
+import com.example.backprojet.repo.UsersRepo;
 import com.example.backprojet.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -88,12 +88,14 @@ public class ProjectController {
 
     @PutMapping("/{pprojectId}/delete/{userid}")
     Project deleteUsers(
-            @PathVariable Long userid,
+            @PathVariable String userid,
             @PathVariable Long pprojectId
     ) {
         Project project = projectRepo.findById(pprojectId).get();
         System.out.println(project);
-        Users user = usersRepo.findById(userid).get();
+
+        List<Users> users  =  usersRepo.getUserByname(userid);
+        Users user = users.get(0);
         System.out.println(user);
         project.deleteUsers(user);
         System.out.println(project);
@@ -115,12 +117,13 @@ public class ProjectController {
 
     @PutMapping("/{pprojectId}/enroll/{userid}")
     Project enrollUserToProject(
-            @PathVariable Long userid,
+            @PathVariable String userid,
             @PathVariable Long pprojectId
     ) {
         Project project = projectRepo.findById(pprojectId).get();
         System.out.println(project);
-        Users user = usersRepo.findById(userid).get();
+        List<Users> users  =  usersRepo.getUserByname(userid);
+        Users user = users.get(0);
         System.out.println(user);
         project.enrollUsers(user);
         System.out.println(project);
@@ -170,6 +173,10 @@ public class ProjectController {
         return (List<Project>) projectRepo.getProjectByProjectTitle(ProjectTitle);
     }
 
+    @RequestMapping("/findProjectManager/{ProjectManager}")
+    public List<Project> getProjectByProjectManager(@PathVariable String ProjectManager) {
+        return (List<Project>) projectRepo.getProjectByProjectManager(ProjectManager);
+    }
     @RequestMapping("/findLocation/{ProjectLocation}")
     public List<Project> getProjectByProjectLocation(@PathVariable String ProjectLocation) {
         return (List<Project>) projectRepo.getProjectByProjectLocation(ProjectLocation);
