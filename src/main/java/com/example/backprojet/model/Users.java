@@ -19,6 +19,26 @@ public class Users implements Serializable {
     private int experience;
     private String post;
 
+    public long getMobile() {
+        return mobile;
+    }
+
+    public void setMobile(long mobile) {
+        this.mobile = mobile;
+    }
+
+    private long mobile;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    private String email;
+
     //private String skill;
     @ElementCollection
     //@Value("${arrayOfStrings}").split(',')}"

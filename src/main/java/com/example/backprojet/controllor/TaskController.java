@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -140,7 +141,13 @@ public class TaskController {
         task1.setAlmostfinished(task.isAlmostfinished());
         task1.setBlocked(task.isBlocked());
         task1.setUrgent(task.isUrgent());
-        task1.setProgress(task.getProgress());
+        task1.setStatus(task.getStatus());
+        if(Objects.equals(task.getStatus(), "done")){
+            task1.setProgress(100);
+        }
+        else{
+            task1.setProgress(task.getProgress());
+        }
         Task updatedGadget = taskRepo.save(task1);
         return new ResponseEntity<>(updatedGadget, HttpStatus.OK);
     }

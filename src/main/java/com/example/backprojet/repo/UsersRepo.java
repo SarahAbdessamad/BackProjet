@@ -32,6 +32,9 @@ public interface UsersRepo extends JpaRepository<Users, String> , CrudRepository
     @Query("SELECT u FROM Users u WHERE u.skill = :skill ")
     public Iterable<Users> findBySkill(@Param("skill") String skill);
 
+    @Query("SELECT u FROM Users u WHERE u.userName LIKE  CONCAT('%',:nom,'%')")
+    List<Users> getUserBynames(@Param("nom") String nom);
+
    // Optional<Users> findByEmailAndPassword(String email, String password);
 
 
