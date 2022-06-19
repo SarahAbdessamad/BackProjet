@@ -39,14 +39,12 @@ public class StoryController {
         this.storyService = storyService;
     }
 
-
     @PostMapping("/addStory")
     void addStory(@RequestBody Story story) {
         Epic storyEpic  = epicRepo.getById(story.getEpicId());
         story.setEpic( storyEpic );
         storyRepo.save(story);
     }
-
 
     @RequestMapping("/find/{id}")
     public Optional<Story> getStoryById(@PathVariable(value = "id") Long StoryId) {

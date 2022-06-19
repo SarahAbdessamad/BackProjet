@@ -5,9 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Users implements Serializable {
@@ -20,7 +18,39 @@ public class Users implements Serializable {
     private String departement;
     private int experience;
     private String post;
-    private String skill;
+
+    //private String skill;
+    @ElementCollection
+    //@Value("${arrayOfStrings}").split(',')}"
+    //@CollectionTable(name = "skill")
+    private List<String> skill = new ArrayList<String>();
+    @ElementCollection
+    private List<Long> participatedInThisProject = new ArrayList<>();
+/*
+    @OneToMany(mappedBy = "users" , cascade = CascadeType.REMOVE)
+    @JsonIgnore
+    private List<Note> notes = new ArrayList<>();
+    public List<Note> getNotes() {
+        return notes;
+    }
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
+    }
+
+ */
+
+    @OneToMany(mappedBy = "userss" , cascade = CascadeType.REMOVE)
+    private List<Vacation> vacations;
+
+    /*
+        public List<Vacation> getVacations() {
+            return vacations;
+        }
+        public void setVacations(List<Vacation> vacations) {
+            this.vacations = vacations;
+        }
+
+     */
     @ManyToOne
     @JoinColumn(name = "project_project_id")
     private Project project;
@@ -33,6 +63,7 @@ public class Users implements Serializable {
                     @JoinColumn(name = "ROLE_ID")
             }
     )
+
     private Set<Role> role;
 
     @OneToMany(mappedBy = "user" , cascade = CascadeType.REMOVE)
@@ -79,11 +110,11 @@ public class Users implements Serializable {
     }
 
 
-    public String getSkill() {
+    public List<String> getSkill() {
         return skill;
     }
 
-    public void setSkill(String skill) {
+    public void setSkill(List<String> skill) {
         this.skill = skill;
     }
 
@@ -127,6 +158,7 @@ public class Users implements Serializable {
         return project;
     }
 
+
     public Users() {
 
     }
@@ -141,7 +173,7 @@ public class Users implements Serializable {
         this.departement = departement;
         this.experience = experience;
         this.post = post;
-        this.skill = skill;
+        this.skill = Collections.singletonList(skill);
     }
 
     public Users(String userName, String userFirstName, String userLastName, String userPassword) {
@@ -173,6 +205,11 @@ public class Users implements Serializable {
         return listTasks;
     }
 
+    public List<Long> getParticipatedInThisProject() {
+        return participatedInThisProject;
+    }
 
-
+    public void setParticipatedInThisProject(List<Long> participatedInThisProject) {
+        this.participatedInThisProject = participatedInThisProject;
+    }
 }

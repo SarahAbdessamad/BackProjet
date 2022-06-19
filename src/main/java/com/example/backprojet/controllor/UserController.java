@@ -1,7 +1,9 @@
 package com.example.backprojet.controllor;
 
 
+import com.example.backprojet.model.Project;
 import com.example.backprojet.model.Users;
+import com.example.backprojet.repo.ProjectRepo;
 import com.example.backprojet.repo.UsersRepo;
 import com.example.backprojet.service.UserService;
 import com.example.backprojet.service.UsersService;
@@ -16,19 +18,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @RestController
 @RequestMapping("/User")
 public class UserController {
 
 
-
     @Autowired
     private UserService userService;
+    @Autowired
+    private ProjectRepo projectRepo;
 
     @PostConstruct
     public void initRoleAndUser() {
@@ -121,6 +121,21 @@ public class UserController {
     @RequestMapping("/findUser/{skill}")
     public List<Users> findBySpeciality(@PathVariable String skill){
         return (List<Users>) userRepo.findBySkill(skill);
+    }
+
+    @PutMapping("/{username}/addskill/{skill}")
+    public ResponseEntity<Users> addskill(@PathVariable String username,@PathVariable String skill,
+                                               @RequestBody Users user) {
+        List<Users> users  =  userRepo.getUserByname(username);
+        Users user1 = users.get(0);
+        List<String> skills =  user1.getSkill();
+        //ArrayList<String> list = new ArrayList<>();
+        for(int i = 0 ; i < skills.size(); i++)
+            System.out.println(skills.get(i));
+        skills.add(skill);
+        user1.setSkill(skills);
+        Users updateduser =  userRepo.save(user1);
+        return new ResponseEntity<>(updateduser, HttpStatus.OK);
     }
 
     @RequestMapping("/findUserRole/{userRole}")

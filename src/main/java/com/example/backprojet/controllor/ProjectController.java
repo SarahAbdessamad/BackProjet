@@ -1,6 +1,7 @@
 package com.example.backprojet.controllor;
 
 import com.example.backprojet.exception.UsernotFoundException;
+import com.example.backprojet.model.Note;
 import com.example.backprojet.model.Project;
 import com.example.backprojet.model.Users;
 import com.example.backprojet.repo.ProjectRepo;
@@ -33,7 +34,6 @@ public class ProjectController {
     @PostMapping("/addproject")
     void addProject(@RequestBody Project project) {
         projectRepo.save(project);
-
     }
     @RequestMapping("/find/{id}")
     public Optional<Project> getProjectById(@PathVariable(value = "id") Long ProjectId) {
@@ -127,6 +127,13 @@ public class ProjectController {
         System.out.println(user);
         project.enrollUsers(user);
         System.out.println(project);
+        List<Long> participatedInThisProjects = user.getParticipatedInThisProject();
+
+        for(int i = 0 ; i < participatedInThisProjects.size(); i++)
+        { System.out.println(participatedInThisProjects.get(i));
+        participatedInThisProjects.add(pprojectId);}
+        user.setParticipatedInThisProject(participatedInThisProjects);
+      usersRepo.save(user);
         return projectRepo.save(project);
     }
 
@@ -255,4 +262,7 @@ public class ProjectController {
         List<Project> project = (List<Project>) projectRepo.getUnarchivedProject();
         return new ResponseEntity<List<Project>>(project, HttpStatus.OK);
     }
+
+
+
 }

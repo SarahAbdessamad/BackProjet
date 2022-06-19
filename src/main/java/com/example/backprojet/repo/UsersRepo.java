@@ -1,5 +1,6 @@
 package com.example.backprojet.repo;
 
+import com.example.backprojet.model.Note;
 import com.example.backprojet.model.Project;
 import com.example.backprojet.model.Users;
 import lombok.var;
@@ -20,9 +21,10 @@ public interface UsersRepo extends JpaRepository<Users, Long> {
     //public Users getUserByLetter(@Param("letter") char l);
 }
  */
-public interface UsersRepo extends JpaRepository<Users, Long> {
+public interface UsersRepo extends JpaRepository<Users, String> , CrudRepository<Users, String>{
     @Query("SELECT u FROM Users u WHERE u.userName = :nom")
     List<Users> getUserByname(@Param("nom") String nom);
+//Select project_id from users_enrolled where id ="abdou";
 
     @Query("SELECT u FROM Users u ORDER BY u.experience DESC")
     public Iterable<Users> findByExperience();
@@ -31,5 +33,6 @@ public interface UsersRepo extends JpaRepository<Users, Long> {
     public Iterable<Users> findBySkill(@Param("skill") String skill);
 
    // Optional<Users> findByEmailAndPassword(String email, String password);
+
 
 }

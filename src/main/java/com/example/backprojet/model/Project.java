@@ -34,8 +34,17 @@ public class Project implements Serializable {
     public List<Epic> getEpics() {
         return epics;
     }
-    public void setEpics(List<Task> tasks) {
+    public void setEpics(List<Epic> epics) {
         this.epics = epics;
+    }
+
+    @OneToMany(mappedBy = "project" , cascade = CascadeType.REMOVE)
+    private List<Note> notes;
+    public List<Note> getNotes() {
+        return notes;
+    }
+    public void setNotes(List<Note> notes) {
+        this.notes = notes;
     }
 
 
@@ -230,4 +239,6 @@ public class Project implements Serializable {
             users.add(enrolledusers.get(i));
         return users;
     }
+
+
 }
